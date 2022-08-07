@@ -5,40 +5,44 @@
     <parent>
         <groupId>vip.yeee.memo</groupId>
         <artifactId>memo-parent</artifactId>
-        <version>1.0.1-SNAPSHOT</version>
+        <version>3.2.2-SNAPSHOT</version>
         <relativePath/>
     </parent>
 
-	<artifactId>yeee-manage</artifactId>
+    <groupId>vip.yeee.app</groupId>
+	<artifactId>yeee-application</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>yeee-app-common</module>
+        <module>yeee-sys-manage</module>
+        <module>yeee-activiti7-manage</module>
+        <module>yeee-app-bootstrap</module>
+    </modules>
 
     <dependencies>
         <dependency>
             <groupId>vip.yeee.memo</groupId>
-            <artifactId>common-model</artifactId>
+            <artifactId>base-web</artifactId>
         </dependency>
         <dependency>
             <groupId>vip.yeee.memo</groupId>
-            <artifactId>common-util</artifactId>
+            <artifactId>base-mybatis-plus</artifactId>
         </dependency>
         <dependency>
             <groupId>vip.yeee.memo</groupId>
-            <artifactId>common-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>vip.yeee.memo</groupId>
-            <artifactId>common-security</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>vip.yeee.memo</groupId>
-            <artifactId>common-mybatis-plus</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>vip.yeee.memo</groupId>
-            <artifactId>common-swagger</artifactId>
+            <artifactId>base-swagger</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.mapstruct</groupId>
+                    <artifactId>mapstruct</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct-jdk8</artifactId>
+            <artifactId>mapstruct</artifactId>
         </dependency>
         <dependency>
             <groupId>org.mapstruct</groupId>

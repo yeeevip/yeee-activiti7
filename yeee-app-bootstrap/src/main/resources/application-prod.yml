@@ -1,0 +1,33 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/yeee_activity7?characterEncoding=UTF-8&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true
+    username: root
+    password: root
+  activiti:
+    history-level: full
+    db-history-used: true
+    # 自动部署验证设置:true-开启（默认）、false-关闭
+    check-process-definitions: false
+security:
+  oauth2:
+    resource:
+      token-info-uri: http://127.0.0.1:${server.port}${server.servlet.context-path}/oauth/check_token
+    client:
+      client-id: yeee-activiti7
+      client-secret: 111111
+yeee:
+  web:
+    cors:
+      enable: true
+  swagger:
+    enable: true
+    title: yeee工作流演示
+    description: yeee工作流演示
+    contact-name: yeee
+    version: 1.0
+  webauth:
+    token-store:
+      jwt-secret: ~1ds@@###fadfsaf
+      db:
+        enabled: true
