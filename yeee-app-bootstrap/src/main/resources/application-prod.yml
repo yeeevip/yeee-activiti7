@@ -31,3 +31,6 @@ yeee:
       jwt-secret: ~1ds@@###fadfsaf
       db:
         enabled: true
+    resource:
+      exclude:
+        - /activiti-editor/**

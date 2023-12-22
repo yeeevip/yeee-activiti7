@@ -2,30 +2,24 @@
   <div class="mod-definition">
     <el-form :inline="true" :model="dataForm" @keyup.enter.native="listData()">
       <el-form-item>
-        <el-input v-model="dataForm.name" placeholder="名称" clearable></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button size="small" @click="listData()">查询</el-button>
-        <el-button v-if="$hasPerm('activiti:definition:add')" size="small" type="primary" @click="editHandle()">在线制作流程</el-button>
-        <el-button v-if="$hasPerm('activiti:definition:del')" size="small" type="danger" @click="delHandle()" :disabled="dataListSelections.length <= 0">删除</el-button>
+        <el-button size="small" @click="listData()">刷新列表</el-button>
+        <el-button size="small" type="primary" @click="addBpmn()">在线制作流程</el-button>
+        <el-button size="small" type="danger" @click="delHandle()" :disabled="dataListSelections.length <= 0">删除</el-button>
       </el-form-item>
     </el-form>
     <el-table :data="dataList" border stripe v-loading="dataListLoading" :max-height="tableHeight"
             @selection-change="selectionChangeHandle" @sort-change="sortChangeHandle" style="width: 100%;">
       <el-table-column type="selection" header-align="center" align="center" width="50"></el-table-column>
-      <table-tree-column prop="name"
-        treeKey="id"
-        parentKey="pid"
-        levelKey="level"
-        childKey="children"
-        label="名称" header-align="center" align="left"></table-tree-column>
-      <el-table-column prop="code" label="编码" header-align="center" align="center"></el-table-column>
-      <el-table-column prop="sort" label="显示排序" header-align="center" align="center"></el-table-column>
+      <el-table-column prop="processDefinitionID" label="流程定义ID" header-align="center" align="center"></el-table-column>
+      <el-table-column prop="name" label="流程定义名称" header-align="center" align="center"></el-table-column>
+      <el-table-column prop="deploymentID" label="部署ID" header-align="center" align="center"></el-table-column>
+      <el-table-column prop="resourceName" label="流程文件名称" header-align="center" align="center"></el-table-column>
+      <el-table-column prop="key" label="KEY" header-align="center" align="center"></el-table-column>
+      <el-table-column prop="version" label="部署版本" header-align="center" align="center"></el-table-column>
       <el-table-column label="操作" fixed="right" header-align="center" align="center" width="100">
         <template slot-scope="scope">
-          <!--<el-button v-if="$hasPerm('sys:dept:info')" type="text" size="small" @click="infoHandle(scope.row.id)" icon="el-icon-document" title="详情"></el-button>-->
-          <el-button v-if="$hasPerm('sys:dept:upd')" type="text" size="small" @click="editHandle(scope.row.id)" icon="el-icon-edit" title="编辑"></el-button>
-          <el-button v-if="$hasPerm('sys:dept:del')" type="text" size="small" @click="delHandle(scope.row.id)" icon="el-icon-delete" title="删除"></el-button>
+          <el-button type="text" size="small" @click="editHandle(scope.row.id)" icon="el-icon-edit" title="编辑"></el-button>
+          <el-button type="text" size="small" @click="delHandle(scope.row.id)" icon="el-icon-delete" title="删除"></el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -57,9 +51,9 @@
       }
     },
     methods: {
-      infoHandle (id) {
+      addBpmn () {
         let api = index.baseUrl2()
-        window.open(api + '/pages/admin/v1/shenhe.html?id=' + id, '_blank')
+        window.open(api + '/activiti-editor/index.html?type=addBpmn', '_blank')
       }
     },
     components: {
