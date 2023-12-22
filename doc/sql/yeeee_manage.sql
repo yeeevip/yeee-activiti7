@@ -245,7 +245,9 @@ CREATE TABLE `sys_role`  (
 -- Records of sys_role
 -- ----------------------------
 INSERT INTO `sys_role` VALUES (1, 'ADMIN', '管理员', 0, '管理员', '1', '2021-11-24 11:33:10', 'admin', NULL);
-
+INSERT INTO sys_role
+(id, code, name, status, remark, create_by, create_time, update_by, update_time)
+VALUES(2, 'ACTIVITI_USER', 'ACTIVITI_USER', 0, NULL, 'admin', '2023-12-22 15:28:13', 'admin', '2023-12-22 15:28:13');
 -- ----------------------------
 -- Table structure for sys_role_menu
 -- ----------------------------
@@ -337,5 +339,9 @@ CREATE TABLE `sys_user_role`  (
   INDEX `idx_role_id`(`role_id`) USING BTREE,
   INDEX `idx_user_role`(`role_id`, `user_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 367 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = '用户角色关联表' ROW_FORMAT = Dynamic;
+
+INSERT INTO sys_user_role
+(id, user_id, role_id, create_by, create_time, update_by, update_time)
+VALUES(2, 1, 2, 'admin', '2023-12-22 15:28:22', 'admin', '2023-12-22 15:28:22');
 
 SET FOREIGN_KEY_CHECKS = 1;
