@@ -211,6 +211,18 @@ VALUES(4353221119792136, 4347326007383040, '编辑', '', 'sys:dept:upd', '', 1, 
 INSERT INTO sys_menu
 (id, pid, name, url, perm, icon, seq, remark, `type`, create_time, create_by, update_time, update_by)
 VALUES(4353221119792137, 4347326007383040, '新增', '', 'sys:dept:add', '', 1, NULL, 1, '2022-05-29 14:53:53', 'admin', '2022-05-29 14:53:53', 'admin');
+INSERT INTO sys_menu
+(id, pid, name, url, perm, icon, seq, remark, `type`, create_time, create_by, update_time, update_by)
+VALUES(4353221119792138, NULL, '工作流', '', '', 'icon-appstore', 1, NULL, 0, '2023-12-22 10:39:00', 'admin', '2023-12-22 10:39:35', 'admin');
+INSERT INTO sys_menu
+(id, pid, name, url, perm, icon, seq, remark, `type`, create_time, create_by, update_time, update_by)
+VALUES(4353221119792139, 4353221119792138, '流程定义', 'activiti/definition/definition', '', 'icon-check-circle', 1, NULL, 0, '2023-12-22 10:40:44', 'admin', '2023-12-22 10:42:28', 'admin');
+INSERT INTO sys_menu
+(id, pid, name, url, perm, icon, seq, remark, `type`, create_time, create_by, update_time, update_by)
+VALUES(4353221119792140, 4353221119792138, '流程实例', 'activiti/instance/instance', '', 'icon-check-circle', 1, NULL, 0, '2023-12-22 10:41:33', 'admin', '2023-12-22 10:41:33', 'admin');
+INSERT INTO sys_menu
+(id, pid, name, url, perm, icon, seq, remark, `type`, create_time, create_by, update_time, update_by)
+VALUES(4353221119792141, 4353221119792138, '代办任务', 'activiti/task/task', '', 'icon-check-circle', 1, NULL, 0, '2023-12-22 10:42:17', 'admin', '2023-12-22 10:42:17', 'admin');
 -- ----------------------------
 -- Table structure for sys_role
 -- ----------------------------
