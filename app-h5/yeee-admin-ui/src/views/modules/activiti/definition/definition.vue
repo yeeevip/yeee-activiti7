@@ -18,7 +18,7 @@
       <el-table-column prop="version" label="部署版本" header-align="center" align="center"></el-table-column>
       <el-table-column label="操作" fixed="right" header-align="center" align="center" width="100">
         <template slot-scope="scope">
-          <el-button type="text" size="small" @click="editHandle(scope.row.id)" icon="el-icon-edit" title="编辑"></el-button>
+          <el-button type="text" size="small" @click="lookBpmn(scope.row.deploymentID, scope.row.resourceName)">查看</el-button>
           <el-button type="text" size="small" @click="delHandle(scope.row.id)" icon="el-icon-delete" title="删除"></el-button>
         </template>
       </el-table-column>
@@ -53,7 +53,15 @@
     methods: {
       addBpmn () {
         let api = index.baseUrl2()
-        window.open(api + '/activiti-editor/index.html?type=addBpmn', '_blank')
+        let token = localStorage.getItem('yeee-manageweb-token')
+        window.open(api + '/activiti-editor/index.html?type=addBpmn&tt=' + token, '_blank')
+      },
+      lookBpmn (depId, rName) {
+        let api = index.baseUrl2()
+        let token = localStorage.getItem('yeee-manageweb-token')
+        window.open(api + '/activiti-editor/index.html?type=lookBpmn&deploymentFileUUID=' + depId
+          + '&deploymentName=' + rName
+          + '&tt=' + token, '_blank')
       }
     },
     components: {

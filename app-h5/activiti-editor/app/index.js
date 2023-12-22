@@ -100,9 +100,12 @@ $(function () {
         }else{
             //加载后台方法获取xml
             $.ajax({
-                url: publicurl+'processDefinition/getDefinitionXML',
+                url: publicurl+'activiti7/definition/xml',
                 type: 'GET',
                 data: param,
+                headers: {
+                    "Authorization": 'Bearer ' + tools.getUrlParam(window.location.href).tt
+                },
                 dataType:'text',
                 success: function (result) {
                     var newXmlData = result

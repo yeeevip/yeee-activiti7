@@ -75,17 +75,21 @@ const tools = {
                     "stringBPMN":xml
                 }
             $.ajax({
-                url: publicurl+'processDefinition/addDeploymentByString',
+                url: publicurl+'activiti7/definition/addDeploymentByString',
                 type: 'POST',
                 dataType:"json",
                 data: param,
+                headers: {
+                    "Authorization": 'Bearer ' + tools.getUrlParam(window.location.href).tt
+                },
                 //headers:{'Content-Type':'application/json;charset=utf8'},
                 success: function (result) {
-                    if(result.msg=='成功'){
+                    if(result.code == 200) {
                         tools.syhide('alert')
                         alert('保存成功')
+                        window.close()
                     }else{
-                        alert(result.msg)
+                        alert(result.message)
                     }
                 },
                 error: function (err) {
