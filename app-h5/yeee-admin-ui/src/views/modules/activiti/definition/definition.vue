@@ -16,10 +16,11 @@
       <el-table-column prop="resourceName" label="流程文件名称" header-align="center" align="center"></el-table-column>
       <el-table-column prop="key" label="KEY" header-align="center" align="center"></el-table-column>
       <el-table-column prop="version" label="部署版本" header-align="center" align="center"></el-table-column>
-      <el-table-column label="操作" fixed="right" header-align="center" align="center" width="100">
+      <el-table-column label="操作" fixed="right" header-align="center" align="center" width="200">
         <template slot-scope="scope">
           <el-button type="text" size="small" @click="lookBpmn(scope.row.deploymentID, scope.row.resourceName)">查看</el-button>
-          <el-button type="text" size="small" @click="delHandle(scope.row.id)" icon="el-icon-delete" title="删除"></el-button>
+          <el-button type="text" size="small" @click="createInstance(scope.row.processDefinitionID)">新建实例</el-button>
+          <el-button type="text" size="small" @click="delHandle(scope.row.id)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -45,7 +46,8 @@
         gridOptions: {
           isQuery: false,
           listUrl: '/activiti7/definition/list',
-          delUrl: null
+          delUrl: '/activiti7/definition/delete',
+          delKey: 'deploymentID'
         },
         dataForm: {}
       }
@@ -59,9 +61,24 @@
       lookBpmn (depId, rName) {
         let api = index.baseUrl2()
         let token = localStorage.getItem('yeee-manageweb-token')
-        window.open(api + '/activiti-editor/index.html?type=lookBpmn&deploymentFileUUID=' + depId
-          + '&deploymentName=' + rName
-          + '&tt=' + token, '_blank')
+        window.open(api + '/activiti-editor/index.html?type=lookBpmn&deploymentFileUUID=' + depId + '&deploymentName=' + rName + '&tt=' + token, '_blank')
+      },
+      createInstance (pdId) {
+        this.$http.json().post('/activiti7/instance/create', {
+          'pdId': pdId
+        }).then(({data: res}) => {
+          if (res.code !== 200) {
+            return this.$message.error(res.msg)
+          }
+          this.$message({
+            message: '操作成功',
+            type: 'success',
+            duration: 500,
+            onClose: () => {
+              this.listData()
+            }
+          })
+        }).catch(() => {})
       }
     },
     components: {

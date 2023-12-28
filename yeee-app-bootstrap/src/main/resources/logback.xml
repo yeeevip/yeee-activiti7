@@ -74,6 +74,11 @@
         </filter>
     </appender>
 
+    <!--开启activiti日志-->
+    <logger name="org.activiti.engine.impl.persistence.entity" level="trace">
+        <appender-ref ref="REF-CONSOLE"/>
+    </logger>
+
     <springProfile name="dev">
         <root level="INFO">
             <appender-ref ref="REF-CONSOLE"/>

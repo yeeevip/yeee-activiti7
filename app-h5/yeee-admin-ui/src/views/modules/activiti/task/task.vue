@@ -3,7 +3,6 @@
     <el-form :inline="true" :model="dataForm" @keyup.enter.native="listData()">
       <el-form-item>
         <el-button size="small" @click="listData()">刷新列表</el-button>
-        <el-button size="small" type="danger" @click="delHandle()" :disabled="dataListSelections.length <= 0">删除</el-button>
       </el-form-item>
     </el-form>
     <el-table :data="dataList" border stripe v-loading="dataListLoading" :max-height="tableHeight"
@@ -17,7 +16,7 @@
       <el-table-column prop="createdDate" label="创建时间" header-align="center" align="center"></el-table-column>
       <el-table-column label="操作" fixed="right" header-align="center" align="center" width="100">
         <template slot-scope="scope">
-          <el-button type="text" size="small" @click="delHandle(scope.row.id)" icon="el-icon-delete" title="删除"></el-button>
+          <el-button type="text" size="small" @click="completeHandle(scope.row.id)">完成任务</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -35,20 +34,33 @@
 
 <script>
   import grid from '@/mixins/grid'
-  import * as index from '@/utils/index'
   export default {
     mixins: [grid],
     data () {
       return {
         gridOptions: {
           isQuery: false,
-          listUrl: '/activiti7/task/list',
-          delUrl: null
+          listUrl: '/activiti7/task/list'
         },
         dataForm: {}
       }
     },
     methods: {
+      completeHandle (taskId) {
+        this.$http.get('/activiti7/task/complete?taskId=' + taskId).then(({data: res}) => {
+          if (res.code !== 200) {
+            return this.$message.error(res.msg)
+          }
+          this.$message({
+            message: '操作成功',
+            type: 'success',
+            duration: 500,
+            onClose: () => {
+              this.listData()
+            }
+          })
+        }).catch(() => {})
+      }
     },
     components: {
     }
