@@ -10,7 +10,7 @@
     </parent>
 
     <groupId>vip.yeee.app</groupId>
-	<artifactId>yeee-application</artifactId>
+	<artifactId>yeee-activiti7</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
@@ -18,7 +18,7 @@
         <module>yeee-app-common</module>
         <module>yeee-sys-manage</module>
         <module>yeee-activiti7-manage</module>
-        <module>yeee-app-bootstrap</module>
+        <module>yeee-activiti7-bootstrap</module>
     </modules>
 
     <dependencies>
