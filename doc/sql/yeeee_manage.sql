@@ -82,15 +82,15 @@ CREATE TABLE `sys_dept`  (
 -- ----------------------------
 -- Records of sys_dept
 -- ----------------------------
-INSERT INTO `sys_dept` VALUES (2, '客服组', 'KF', 1, '-1,1', 0, 2, NULL, '1', '2021-11-09 14:36:03', '1', '2021-12-14 11:20:14');
-INSERT INTO `sys_dept` VALUES (4, '常规组', 'CG', 1, '-1,1', 0, 1, NULL, '1', '2021-12-03 10:17:25', '1', '2021-12-03 10:17:25');
-INSERT INTO `sys_dept` VALUES (5, '核心组', 'HX', 1, '-1,1', 0, 2, NULL, '1', '2021-12-03 10:17:41', '1', '2021-12-03 10:17:41');
-INSERT INTO `sys_dept` VALUES (6, '战略组', 'ZL', 1, '-1,1', 0, 3, NULL, '1', '2021-12-03 10:17:54', '1', '2021-12-03 10:17:54');
-INSERT INTO `sys_dept` VALUES (7, '渠道组', 'QD', 1, '-1,1', 0, 4, NULL, '1', '2021-12-03 10:18:15', '1', '2021-12-03 10:18:15');
-INSERT INTO `sys_dept` VALUES (430, '测试1', '11', 8, '-1,8', 0, 11, NULL, '1', '2021-12-30 21:51:01', '1', '2021-12-30 21:51:01');
-INSERT INTO `sys_dept` VALUES (431, '技术部', 'JS', -1, '-1', 0, 1, NULL, '1', '2022-01-05 17:01:56', '1', '2022-01-05 17:01:56');
-INSERT INTO `sys_dept` VALUES (432, '客户满意部', 'KHMYB', -1, '-1', 0, 5, NULL, '10280', '2022-02-15 11:46:46', '10280', '2022-02-15 11:46:46');
-
+INSERT INTO sys_dept
+(id, name, code, pid, ancestors, status, sort, remark, create_by, create_time, update_by, update_time)
+VALUES(433, '部门1', 'bumeng1', -1, NULL, 0, 0, '', 'admin', '2024-01-04 11:40:16', 'admin', '2024-01-04 11:40:16');
+INSERT INTO sys_dept
+(id, name, code, pid, ancestors, status, sort, remark, create_by, create_time, update_by, update_time)
+VALUES(434, '部门2', 'bumeng2', -1, NULL, 0, 0, '', 'admin', '2024-01-04 11:40:26', 'admin', '2024-01-04 11:40:26');
+INSERT INTO sys_dept
+(id, name, code, pid, ancestors, status, sort, remark, create_by, create_time, update_by, update_time)
+VALUES(435, '部门3', 'bumeng3', -1, NULL, 0, 0, '', 'admin', '2024-01-04 11:40:37', 'admin', '2024-01-04 11:40:37');
 -- ----------------------------
 -- Table structure for sys_menu
 -- ----------------------------
@@ -267,7 +267,12 @@ CREATE TABLE `sys_role_menu`  (
 -- ----------------------------
 -- Records of sys_role_menu
 -- ----------------------------
-
+INSERT INTO sys_role_menu
+(id, role_id, menu_id, remark, create_time, create_by, update_time, update_by)
+VALUES(1742756061720842241, 2, 4353221119792141, NULL, '2024-01-04 11:53:19', 'admin', '2024-01-04 11:53:19', 'admin');
+INSERT INTO sys_role_menu
+(id, role_id, menu_id, remark, create_time, create_by, update_time, update_by)
+VALUES(1742756061733425153, 2, 4353221119792138, NULL, '2024-01-04 11:53:19', 'admin', '2024-01-04 11:53:19', 'admin');
 -- ----------------------------
 -- Table structure for sys_user
 -- ----------------------------
@@ -303,9 +308,18 @@ CREATE TABLE `sys_user`  (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (1, 'admin', '3ab11a8a85f3ef5477e772aa8cb750d2', '超级管理员', NULL, '13888888888', NULL, NULL, 8, NULL, 0, NULL, '2021-07-12 11:24:02', '2022-01-05 17:04:43', '1', '1', '管理员', 1);
-INSERT INTO `sys_user` VALUES (2, 'shenhe', '$2a$10$B3Cxicl0/zR2uAJ1tM55DeuGGiHjDh.BD7XMop1qFoEAfto8g7O3O', '审核员', NULL, '13888888888', NULL, NULL, 131, NULL, 0, NULL, '2021-07-12 11:24:02', '2021-12-16 16:59:44', '1', '1', '管理员', 0);
-
+INSERT INTO sys_user
+(id, username, password, nick_name, email, phone, sex, avatar, dept_id, job_id, state, last_login_time, create_time, update_time, create_by, update_by, remark, super_admin)
+VALUES(1, 'admin', '9db06bcff9248837f86d1a6bcf41c9e7', '超级管理员', NULL, '13888888888', NULL, NULL, 8, NULL, 0, NULL, '2021-07-12 11:24:02', '2023-12-28 15:57:34', '1', 'admin', '管理员', 1);
+INSERT INTO sys_user
+(id, username, password, nick_name, email, phone, sex, avatar, dept_id, job_id, state, last_login_time, create_time, update_time, create_by, update_by, remark, super_admin)
+VALUES(3, 'yonghu1', '9db06bcff9248837f86d1a6bcf41c9e7', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO sys_user
+(id, username, password, nick_name, email, phone, sex, avatar, dept_id, job_id, state, last_login_time, create_time, update_time, create_by, update_by, remark, super_admin)
+VALUES(4, 'yonghu2', '9db06bcff9248837f86d1a6bcf41c9e7', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO sys_user
+(id, username, password, nick_name, email, phone, sex, avatar, dept_id, job_id, state, last_login_time, create_time, update_time, create_by, update_by, remark, super_admin)
+VALUES(5, 'yonghu3', '9db06bcff9248837f86d1a6bcf41c9e7', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 -- ----------------------------
 -- Table structure for sys_user_dept
 -- ----------------------------
@@ -321,7 +335,21 @@ CREATE TABLE `sys_user_dept`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `idx_parent_id`(`user_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '部门表' ROW_FORMAT = Dynamic;
-
+INSERT INTO sys_user_dept
+(id, user_id, dept_id, create_by, create_time, update_by, update_time)
+VALUES(2, 1, 432, 'admin', '2023-12-28 15:57:34', 'admin', '2023-12-28 15:57:34');
+INSERT INTO sys_user_dept
+(id, user_id, dept_id, create_by, create_time, update_by, update_time)
+VALUES(3, 1, 431, 'admin', '2023-12-28 15:57:34', 'admin', '2023-12-28 15:57:34');
+INSERT INTO sys_user_dept
+(id, user_id, dept_id, create_by, create_time, update_by, update_time)
+VALUES(4, 3, 433, 'admin', '2024-01-04 11:51:27', 'admin', '2024-01-04 11:51:27');
+INSERT INTO sys_user_dept
+(id, user_id, dept_id, create_by, create_time, update_by, update_time)
+VALUES(5, 4, 434, 'admin', '2024-01-04 11:51:37', 'admin', '2024-01-04 11:51:37');
+INSERT INTO sys_user_dept
+(id, user_id, dept_id, create_by, create_time, update_by, update_time)
+VALUES(6, 5, 435, 'admin', '2024-01-04 11:51:47', 'admin', '2024-01-04 11:51:47');
 -- ----------------------------
 -- Table structure for sys_user_role
 -- ----------------------------
@@ -339,9 +367,21 @@ CREATE TABLE `sys_user_role`  (
   INDEX `idx_role_id`(`role_id`) USING BTREE,
   INDEX `idx_user_role`(`role_id`, `user_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 367 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = '用户角色关联表' ROW_FORMAT = Dynamic;
-
 INSERT INTO sys_user_role
 (id, user_id, role_id, create_by, create_time, update_by, update_time)
-VALUES(2, 1, 2, 'admin', '2023-12-22 15:28:22', 'admin', '2023-12-22 15:28:22');
+VALUES(5, 1, 1, 'admin', '2023-12-28 15:57:34', 'admin', '2023-12-28 15:57:34');
+INSERT INTO sys_user_role
+(id, user_id, role_id, create_by, create_time, update_by, update_time)
+VALUES(6, 1, 2, 'admin', '2023-12-28 15:57:34', 'admin', '2023-12-28 15:57:34');
+INSERT INTO sys_user_role
+(id, user_id, role_id, create_by, create_time, update_by, update_time)
+VALUES(7, 3, 2, 'admin', '2024-01-04 11:51:27', 'admin', '2024-01-04 11:51:27');
+INSERT INTO sys_user_role
+(id, user_id, role_id, create_by, create_time, update_by, update_time)
+VALUES(8, 4, 2, 'admin', '2024-01-04 11:51:37', 'admin', '2024-01-04 11:51:37');
+INSERT INTO sys_user_role
+(id, user_id, role_id, create_by, create_time, update_by, update_time)
+VALUES(9, 5, 2, 'admin', '2024-01-04 11:51:47', 'admin', '2024-01-04 11:51:47');
+
 
 SET FOREIGN_KEY_CHECKS = 1;
