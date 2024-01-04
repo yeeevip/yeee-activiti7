@@ -1,16 +1,65 @@
 
 ## 系统说明
 
-- 基于 Spring Boot + Vue + activiti7 开发的 **工作流系统**
+- 基于 Spring Boot2.6 + + SpringSecurity + Activiti7 + Vue 搭建的 **工作流系统**
 - 轻量级 + 组件化 + 可扩展
 
-### 工作流管理
+## 项目演示
+
+### 演示账号/密码
+
+1. admin/111111，超级管理员，可以绘制流程定义，创建审批任务
+2. yonghu1/111111，部门1（bumeng1）的普通用户，审批任务
+3. yonghu2/111111，部门2（bumeng2）的普通用户，审批任务
+4. yonghu3/111111，部门3（bumeng3）的普通用户，审批任务
+
+### 在线绘制流程定义
+
+登录admin账号，进入菜单 - 工作流 > 流程定义 > 在线制作流程
+
+- 审批节点1，候选组 = bumeng1
+- 审批节点2，候选组 = bumeng2
+- 审批节点3，候选组 = bumeng3
+
+![](doc/activiti7/images/act-editor1.png)
+
+### 创建/查看审批流程
+
+登录admin账号，进入菜单 - 工作流 > 流程定义 > (列表中找到‘测试流程1’这个审批流程) > 新建实例，这样就开启了一个审批流程。
 
 ![](doc/activiti7/images/act-manage1.png)
 
-### 绘制工作流
+管理员admin也可以进去菜单 - 工作流 > 流程实例 > (查看到正在运行/暂停的审批流程)
 
-![](doc/activiti7/images/act-editor1.png)
+![](doc/activiti7/images/act-manage2.png)
+
+### 任务审批
+
+流程定义在不同的审批环节设置了不同部门的人员来审批，开始流程实例后，人员就可以登录自己账号进入菜单 - 工作流 > 代办任务 > 查看到自己当前的待完成审批项。
+
+#### 部门1用户1审批
+
+用户1登录自己的账号yonghu1完成审批
+
+![](doc/activiti7/images/act-manage3.png)
+
+#### 部门2用户2审批
+
+用户2登录自己的账号yonghu2完成审批
+
+![](doc/activiti7/images/act-manage4.png)
+
+#### 部门3用户3审批
+
+用户3登录自己的账号yonghu3完成审批
+
+![](doc/activiti7/images/act-manage5.png)
+
+### 再次查看审批流程
+
+登录admin账号，进入菜单 - 工作流 > 流程定义 > 列表中的‘测试流程1’这个审批流程不在了，说明已经完成结束了
+
+![](doc/activiti7/images/act-manage6.png)
 
 ## 快速开始
 
@@ -40,31 +89,30 @@ yeee-activiti7
 
 - jdk1.8
 - mysql >= 5.7
-- redis
 
 ```
-# 下载yeee-memo工程
+# 下载yeee-memo脚手架工程
 git clone https://github.com/yeeevip/yeee-memo.git
 
 # 打包[JavaWeb通用脚手架]
-cd memo-parent && mvn clean install
+cd yeee-memo/memo-parent && mvn clean install
 
 # 下载yeee-activiti7项目
-git clone https://github.com/yeeevip/yeee-blog.git
+git clone https://github.com/yeeevip/yeee-activiti7.git
 
 # 运行管理端ui
-cd app-h5/yeee-admin-ui && npm install && npm run dev
+cd yeee-activiti7/app-h5/yeee-admin-ui && npm install && npm run dev
 
-# 运行博客客户端ui
-cd app-h5/activiti-editor && npm install && npm run all
+# 编译流程制作ui
+cd yeee-activiti7/app-h5/activiti-editor && npm install && npm run all
 
 # 运行博客服务
-mvn clean install && java -jar -Dspring.profiles.active=test yeee-app-bootstrap/target/yeee-activiti7-bootstrap-1.0.0-SNAPSHOT.jar
+cd yeee-activiti7 && mvn clean install && java -jar yeee-activiti7-bootstrap/target/yeee-activiti7-bootstrap-1.0.0-SNAPSHOT.jar
 ```
 
 ### 其他说明
 
-1. 欢迎提交 [PR](https://www.yeee.vip)，注意对应提交对应 `blog-dev` 分支
+1. 欢迎提交 [PR](https://www.yeee.vip)
 
 2. 欢迎提交 [issue](https://gitee.com/yeeevip/yeee-blog/issues)，请写清楚遇到问题的原因、开发环境、复显步骤。
 
