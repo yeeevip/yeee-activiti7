@@ -104,7 +104,7 @@ git clone https://github.com/yeeevip/yeee-activiti7.git
 cd yeee-activiti7/app-h5/yeee-admin-ui && npm install && npm run dev
 
 # 编译流程制作ui
-cd yeee-activiti7/app-h5/activiti-editor && npm install && npm run all
+cd yeee-activiti7/app-h5/activiti-editor && npm install --registry=https://registry.npmmirror.com && npm run all
 
 # 运行博客服务
 cd yeee-activiti7 && mvn clean install && java -jar yeee-activiti7-bootstrap/target/yeee-activiti7-bootstrap-1.0.0-SNAPSHOT.jar
