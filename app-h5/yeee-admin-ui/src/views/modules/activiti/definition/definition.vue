@@ -56,12 +56,12 @@
       addBpmn () {
         let api = index.baseUrl2()
         let token = localStorage.getItem('yeee-manageweb-token')
-        window.open(api + '/activiti-editor/index.html?type=addBpmn&tt=' + token, '_blank')
+        window.open(api + 'activiti-editor/index.html?type=addBpmn&tt=' + token, '_blank')
       },
       lookBpmn (depId, rName) {
         let api = index.baseUrl2()
         let token = localStorage.getItem('yeee-manageweb-token')
-        window.open(api + '/activiti-editor/index.html?type=lookBpmn&deploymentFileUUID=' + depId + '&deploymentName=' + rName + '&tt=' + token, '_blank')
+        window.open(api + 'activiti-editor/index.html?type=lookBpmn&deploymentFileUUID=' + depId + '&deploymentName=' + rName + '&tt=' + token, '_blank')
       },
       createInstance (pdId) {
         this.$http.json().post('/activiti7/instance/create', {
