@@ -14,9 +14,10 @@
       <el-table-column prop="status" label="任务状态" header-align="center" align="center"></el-table-column>
       <el-table-column prop="assignee" label="办理人" header-align="center" align="center"></el-table-column>
       <el-table-column prop="createdDate" label="创建时间" header-align="center" align="center"></el-table-column>
-      <el-table-column label="操作" fixed="right" header-align="center" align="center" width="100">
+      <el-table-column label="操作" fixed="right" header-align="center" align="center" width="200">
         <template slot-scope="scope">
-          <el-button type="text" size="small" @click="completeHandle(scope.row.id)">完成任务</el-button>
+          <el-button type="success" size="small" @click="completeHandle(scope.row.id, 1)">通过</el-button>
+          <el-button type="info" size="small" @click="completeHandle(scope.row.id, 0)">驳回</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -46,8 +47,12 @@
       }
     },
     methods: {
-      completeHandle (taskId) {
-        this.$http.get('/activiti7/task/complete?taskId=' + taskId).then(({data: res}) => {
+      completeHandle (taskId, isPass) {
+        this.$http.json().post('/activiti7/task/complete', {
+          'taskId': taskId,
+          'isPass': isPass,
+          'remark': ''
+        }).then(({data: res}) => {
           if (res.code !== 200) {
             return this.$message.error(res.msg)
           }

@@ -10,12 +10,13 @@
             @selection-change="selectionChangeHandle" @sort-change="sortChangeHandle" style="width: 100%;">
       <el-table-column type="selection" header-align="center" align="center" width="50"></el-table-column>
       <el-table-column prop="id" label="ID" header-align="center" align="center"></el-table-column>
-      <el-table-column prop="name" label="实例名称" header-align="center" align="center"></el-table-column>
+      <el-table-column prop="processDefinitionKey" label="流程定义KEY" header-align="center" align="center"></el-table-column>
+      <el-table-column prop="definitionName" label="流程定义名称" header-align="center" align="center"></el-table-column>
+<!--      <el-table-column prop="name" label="实例名称" header-align="center" align="center"></el-table-column>-->
       <el-table-column prop="startDate" label="实例创建时间" header-align="center" align="center"></el-table-column>
       <el-table-column prop="status" label="状态" header-align="center" align="center"></el-table-column>
-      <el-table-column prop="processDefinitionId" label="流程定义ID" header-align="center" align="center"></el-table-column>
-      <el-table-column prop="processDefinitionKey" label="流程定义KEY" header-align="center" align="center"></el-table-column>
-      <el-table-column prop="processDefinitionVersion" label="版本" header-align="center" align="center"></el-table-column>
+<!--      <el-table-column prop="processDefinitionVersion" label="版本" header-align="center" align="center"></el-table-column>-->
+      <el-table-column prop="curTask" label="当前任务" header-align="center" align="center"></el-table-column>
       <el-table-column label="操作" fixed="right" header-align="center" align="center" width="100">
         <template slot-scope="scope">
           <el-button type="text" size="small" v-if="scope.row.status === 'RUNNING'" @click="suspendHandle(scope.row.id)">暂停</el-button>

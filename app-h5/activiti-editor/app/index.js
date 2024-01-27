@@ -143,7 +143,15 @@ $(function () {
     })
     // 点击上传
     $("#uploadFile").on("change", function () {
-        tools.upload(bpmnModeler,container)
+        // tools.upload(bpmnModeler,container)
+
+        var uploadFile = document.myForm.uploadFile.files[0];
+        var reader = new FileReader();
+        reader.onload = function(event) {
+            var newXmlData = event.target.result;
+            tools.createDiagram(newXmlData, bpmnModeler, container);
+        };
+        reader.readAsText(uploadFile);
     })
 
     // 表单中的操作按钮

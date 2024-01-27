@@ -196,6 +196,9 @@ VALUES(4353221119792140, 4353221119792138, '流程实例', 'activiti/instance/in
 INSERT INTO sys_menu
 (id, pid, name, url, perm, icon, seq, remark, `type`, create_time, create_by, update_time, update_by)
 VALUES(4353221119792141, 4353221119792138, '代办任务', 'activiti/task/task', '', 'icon-check-circle', 1, NULL, 0, '2023-12-22 10:42:17', 'admin', '2023-12-22 10:42:17', 'admin');
+INSERT INTO sys_menu
+(id, pid, name, url, perm, icon, seq, remark, `type`, create_time, create_by, update_time, update_by)
+VALUES(4353221119792142, 4353221119792138, '历史实例', 'activiti/historyInstance/historyInstance', '', '', 1, NULL, 0, '2024-01-27 23:33:56', 'admin', '2024-01-27 23:33:56', 'admin');
 -- ----------------------------
 -- Table structure for sys_role
 -- ----------------------------
