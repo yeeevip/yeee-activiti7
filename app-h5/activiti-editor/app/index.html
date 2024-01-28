@@ -8,6 +8,8 @@
   <link rel="stylesheet" href="css/diagram-js.css" />
   <link rel="stylesheet" href="vendor/bpmn-font/css/bpmn-embedded.css" />
   <link rel="stylesheet" href="css/app.css" />
+  <!-- 引入样式 -->
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
 
   <style>
     .item{
@@ -83,6 +85,7 @@
 </head>
 
 <body>
+
 <div class="content with-diagram" id="js-drop-zone">
   <div class="message error">
     <div class="note">
@@ -129,6 +132,129 @@
 <div class="bpmn-modal">
   <iframe id="Dynamic-form" style="width:100%;height:100%;" src="http://localhost:8080/" frameborder="0"></iframe>
 </div>
+
+<div id="editor-dialog-candidate">
+  <el-dialog title="输入内容" :visible.sync="dialogVisible">
+    <el-form :model="form">
+      <el-form-item label="部门" :label-width="formLabelWidth">
+        <el-tree
+                :data="groupData"
+                :props="treeDefaultProps"
+                @node-click="handleNodeClick" show-checkbox></el-tree>
+      </el-form-item>
+      <el-form-item label="用户" :label-width="formLabelWidth" v-if="action === 'user'">
+        <el-select v-model="form.user" multiple placeholder="请选择" math-width="100%">
+          <el-option
+                  v-for="item in userList"
+                  :key="item.id"
+                  :label="item.username"
+                  :value="item.username">
+          </el-option>
+        </el-select>
+      </el-form-item>
+    </el-form>
+    <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="handleClose">确 定</el-button>
+  </span>
+  </el-dialog>
+</div>
+
+
 <script src="index.js"></script>
 </body>
+
+<script src="https://unpkg.com/vue@2/dist/vue.js"></script>
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script>
+  var vmCandidateDialog = new Vue({
+    el: '#editor-dialog-candidate',
+    data() {
+      return {
+        dialogVisible: false,
+        groupSelect: false,
+        docObj: null,
+        action: 'user',
+        form: {
+          group: '',
+          user: ''
+        },
+        formLabelWidth: '50px',
+        treeDefaultProps: {
+          children: 'children',
+          label: 'label'
+        },
+        groupData: [{
+          label: '一级 1',
+          children: [{
+            label: '二级 1-1',
+            children: [{
+              label: '三级 1-1-1'
+            }]
+          }]
+        }, {
+          label: '一级 2',
+          children: [{
+            label: '二级 2-1',
+            children: [{
+              label: '三级 2-1-1'
+            }]
+          }, {
+            label: '二级 2-2',
+            children: [{
+              label: '三级 2-2-1'
+            }]
+          }]
+        }, {
+          label: '一级 3',
+          children: [{
+            label: '二级 3-1',
+            children: [{
+              label: '三级 3-1-1'
+            }]
+          }, {
+            label: '二级 3-2',
+            children: [{
+              label: '三级 3-2-1'
+            }]
+          }]
+        }],
+        userList: [
+          {
+            id: '111',
+            username: 'admin',
+          }, {
+            id: '222',
+            username: 'admin2',
+          }, {
+            id: '333',
+            username: 'admin3',
+          }
+        ]
+      };
+    },
+    mounted () {
+
+    },
+    methods: {
+      init(action, docObj) {
+        this.dialogVisible = true
+        this.action = action
+        this.docObj = docObj
+      },
+      handleClose(done) {
+        if (this.action === 'user') {
+          this.docObj.val(this.form.user)
+        } else {
+          this.docObj.val(this.form.group)
+        }
+        this.dialogVisible = false
+      },
+      handleNodeClick(data) {
+        console.log(data);
+      }
+    }
+  })
+</script>
+
 </html>

@@ -40,11 +40,36 @@ const tools = {
         try {
             await bpmnModeler.importXML(xml);
             container.removeClass('with-error').addClass('with-diagram');
+            await this.registerUserGroupsEvent()
         } catch (err) {
             container.removeClass('with-diagram').addClass('with-error');
             container.find('.error pre').text(err.message);
             console.error(err);
         }
+    },
+    async registerUserGroupsEvent () {
+    var djsGroup = $(".djs-group").each(function(index) {
+        $(this).unbind("click")
+        $(this).on('click', function() {
+            setTimeout(function () {
+                var candidateUsersElements = $('input[id="activiti-candidateUsers"][type="text"][name="candidateUsers"]');
+                var candidateGroupsElements = $('input[id="activiti-candidateGroups"][type="text"][name="candidateGroups"]');
+                candidateUsersElements.each(function(index) {
+                    $(this).unbind("click")
+                    $(this).on('click', function() {
+                        // alert($(this).val())
+                        vmCandidateDialog.init('user', $(this))
+                    });
+                });
+                candidateGroupsElements.each(function(index) {
+                    $(this).unbind("click")
+                    $(this).on('click', function() {
+                        vmCandidateDialog.init('group', $(this))
+                    });
+                });
+            }, 1000)
+        });
+    });
     },
     /**
      * 通过Json设置颜色

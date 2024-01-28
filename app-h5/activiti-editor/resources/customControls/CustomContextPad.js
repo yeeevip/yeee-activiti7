@@ -1,3 +1,5 @@
+import tools from '../../resources/tools'
+
 export default class CustomContextPad {
   constructor(config, contextPad, create, elementFactory, injector, translate) {
     this.create = create;
@@ -25,6 +27,7 @@ export default class CustomContextPad {
       } else {
         appendUserTaskStart(event, element);
       }
+        tools.registerUserGroupsEvent();
     }
 
     function appendUserTaskStart(event) {

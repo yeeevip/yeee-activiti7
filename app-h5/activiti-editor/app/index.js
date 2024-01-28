@@ -169,7 +169,6 @@ $(function () {
     })
     //
 
-
 });
 function closeModal() {
     $(".bpmn-modal").hide();
