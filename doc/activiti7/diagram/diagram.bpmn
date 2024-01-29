@@ -5,6 +5,9 @@
       <bpmn2:outgoing>Flow_14abztb</bpmn2:outgoing>
     </bpmn2:startEvent>
     <bpmn2:userTask id="Activity_1c9kbfs" name="申请人提交">
+      <bpmn2:extensionElements>
+        <activiti:taskListener class="vip.yeee.memo.common.activiti7.listener.TestTaskListener" event="complete" />
+      </bpmn2:extensionElements>
       <bpmn2:incoming>Flow_14abztb</bpmn2:incoming>
       <bpmn2:incoming>Flow_0p9lc9i</bpmn2:incoming>
       <bpmn2:incoming>Flow_0j7gqvv</bpmn2:incoming>
