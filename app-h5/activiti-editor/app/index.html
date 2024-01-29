@@ -140,7 +140,9 @@
         <el-tree
                 :data="groupData"
                 :props="treeDefaultProps"
-                @node-click="handleNodeClick" show-checkbox></el-tree>
+                node-key="code"
+                ref="groupListTree"
+                @check="handleNodeCheck" show-checkbox></el-tree>
       </el-form-item>
       <el-form-item label="用户" :label-width="formLabelWidth" v-if="action === 'user'">
         <el-select v-model="form.user" multiple placeholder="请选择" math-width="100%">
@@ -165,8 +167,10 @@
 </body>
 
 <script src="https://npm.elemecdn.com/vue@2/dist/vue.js"></script>
+<script src="https://cdn.staticfile.org/vue-resource/1.5.1/vue-resource.min.js"></script>
 <script src="https://npm.elemecdn.com/element-ui/lib/index.js"></script>
 <script>
+
   var vmCandidateDialog = new Vue({
     el: '#editor-dialog-candidate',
     data() {
@@ -182,55 +186,10 @@
         formLabelWidth: '50px',
         treeDefaultProps: {
           children: 'children',
-          label: 'label'
+          label: 'name'
         },
-        groupData: [{
-          label: '一级 1',
-          children: [{
-            label: '二级 1-1',
-            children: [{
-              label: '三级 1-1-1'
-            }]
-          }]
-        }, {
-          label: '一级 2',
-          children: [{
-            label: '二级 2-1',
-            children: [{
-              label: '三级 2-1-1'
-            }]
-          }, {
-            label: '二级 2-2',
-            children: [{
-              label: '三级 2-2-1'
-            }]
-          }]
-        }, {
-          label: '一级 3',
-          children: [{
-            label: '二级 3-1',
-            children: [{
-              label: '三级 3-1-1'
-            }]
-          }, {
-            label: '二级 3-2',
-            children: [{
-              label: '三级 3-2-1'
-            }]
-          }]
-        }],
-        userList: [
-          {
-            id: '111',
-            username: 'admin',
-          }, {
-            id: '222',
-            username: 'admin2',
-          }, {
-            id: '333',
-            username: 'admin3',
-          }
-        ]
+        groupData: [],
+        userList: []
       };
     },
     mounted () {
@@ -238,9 +197,32 @@
     },
     methods: {
       init(action, docObj) {
+
         this.dialogVisible = true
         this.action = action
         this.docObj = docObj
+
+        this.groupData = []
+        this.userList = []
+
+        let headers =  {
+          "Authorization": 'Bearer ' + getUrlParam(window.location.href).tt
+        }
+
+        var query = "%7B%22w%22%3A%5B%5D%2C%22o%22%3A%5B%5D%2C%22p%22%3A%7B%22n%22%3A1%2C%22s%22%3A1000%7D%7D"
+
+        this.$http.get('/manage/sys-dept/page?query=' + query, {'headers': headers}).then(function(res){
+          res = res.body
+          if (res.code != "200") {
+            return this.$message.error(res.message)
+          }
+          this.groupData = res.data.result
+        },function(){
+          return this.$message.error("请求失败")
+        });
+
+        this.initSysUserList({})
+
       },
       handleClose(done) {
         if (this.action === 'user') {
@@ -250,11 +232,45 @@
         }
         this.dialogVisible = false
       },
-      handleNodeClick(data) {
-        console.log(data);
+      handleNodeCheck(data) {
+        console.log(this.$refs.groupListTree.getCheckedKeys());
+
+        let query = {
+          sysUserVO: {
+            deptList : this.$refs.groupListTree.getCheckedKeys()
+          }
+        }
+        this.initSysUserList(query)
+      },
+      initSysUserList(query) {
+        let headers =  {
+          "Authorization": 'Bearer ' + getUrlParam(window.location.href).tt
+        }
+        this.$http.post('/manage/sys-user/page2', JSON.stringify(query), {'headers': headers}).then(function(res){
+          res = res.body
+          if (res.code != "200") {
+            return this.$message.error(res.message)
+          }
+          this.userList = res.data.result
+        },function(){
+          return this.$message.error("请求失败")
+        });
       }
     }
   })
+
+  function getUrlParam(url) {
+    var object = {};
+    if (url.indexOf("?") != -1) {
+      var str = url.split("?")[1];
+      var strs = str.split("&");
+      for (var i = 0; i < strs.length; i++) {
+        object[strs[i].split("=")[0]] = strs[i].split("=")[1]
+      }
+      return object
+    }
+    return object[url];
+  }
 </script>
 
 </html>

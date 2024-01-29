@@ -64,28 +64,16 @@
     </sql>
 
     <select id="getList" resultType="vip.yeee.app.common.domain.mysql.entity.SysUser">
-        SELECT
-            id,
-            username,
-            password,
-            nick_name,
-            email,
-            phone,
-            sex,
-            avatar,
-            dept_id,
-            job_id,
-            state,
-            last_login_time,
-            create_time,
-            update_time,
-            create_by,
-            update_by,
-            remark,
-            super_admin
+        select
+            distinct
+            su.*
         FROM
-            sys_user
-        <include refid="searchBy"/>
+            sys_user su
+        left join sys_user_dept sud on sud.user_id = su.id
+        where 1 = 1
+        <if test="sysUser.deptCodeList != null and sysUser.deptCodeList.size > 0">
+            and sud.dept_id in(select id from sys_dept where code in(<foreach collection="sysUser.deptCodeList" item="item" index="index" separator=",">#{item}</foreach>))
+        </if>
     </select>
 
     <select id="getOne" resultType="vip.yeee.app.common.domain.mysql.entity.SysUser">

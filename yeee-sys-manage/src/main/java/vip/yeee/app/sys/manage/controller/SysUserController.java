@@ -55,6 +55,11 @@ public class SysUserController {
         return CommonResult.success(sysUserService.sysUserPageList(sysUserPageReqVO));
     }
 
+    @PostMapping(value = "/page2")
+    public CommonResult<PageVO<UserVO>> sysUserPageList2(@RequestBody SysUserPageReqVO sysUserPageReqVO) {
+        return CommonResult.success(sysUserService.sysUserPageList(sysUserPageReqVO));
+    }
+
     @ApiOperation("用户分页")
     @PreAuthorize("hasAuthority('sys:user:page')")
     @GetMapping(value = "/page")

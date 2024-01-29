@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import vip.yeee.app.sys.manage.model.dto.SysUserDto;
 import vip.yeee.app.sys.manage.model.vo.*;
 import vip.yeee.app.sys.manage.convert.SysUserConvert;
 import vip.yeee.app.sys.manage.domain.mysql.mapper.SysUserDeptMapper;
@@ -62,7 +63,11 @@ public class SysUserService extends ServiceImpl<SysUserMapper, SysUser> {
     }
 
     public PageVO<UserVO> sysUserPageList(SysUserPageReqVO sysUserPageReqVO) {
-        IPage<SysUser> page = sysUserMapper.getList(new Page<>(sysUserPageReqVO.getPageNum(), sysUserPageReqVO.getPageSize()), new SysUser());
+        SysUserDto sysUserDto = new SysUserDto();
+        if (sysUserPageReqVO.getSysUserVO() != null && CollectionUtil.isNotEmpty(sysUserPageReqVO.getSysUserVO().getDeptList())) {
+            sysUserDto.setDeptCodeList(sysUserPageReqVO.getSysUserVO().getDeptList());
+        }
+        IPage<SysUser> page = sysUserMapper.getList(new Page<>(sysUserPageReqVO.getPageNum(), sysUserPageReqVO.getPageSize()), sysUserDto);
         List<UserVO> userVOList = page.getRecords()
                 .stream()
                 .map(sysUserConvert::sysUser2VO)
