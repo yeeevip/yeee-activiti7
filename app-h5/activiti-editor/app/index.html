@@ -205,6 +205,9 @@
         this.groupData = []
         this.userList = []
 
+        this.form.group = ''
+        this.form.user = ''
+
         let headers =  {
           "Authorization": 'Bearer ' + getUrlParam(window.location.href).tt
         }
@@ -226,15 +229,18 @@
       },
       handleClose(done) {
         if (this.action === 'user') {
-          this.docObj.val(this.form.user)
+          if (this.form.group) {
+            this.docObj.val(this.form.user)
+          }
         } else {
-          this.docObj.val(this.form.group)
+          if (this.form.group) {
+            this.docObj.val(this.form.group)
+          }
         }
         this.dialogVisible = false
       },
       handleNodeCheck(data) {
-        console.log(this.$refs.groupListTree.getCheckedKeys());
-
+        this.form.group = this.$refs.groupListTree.getCheckedKeys().join(',')
         let query = {
           sysUserVO: {
             deptList : this.$refs.groupListTree.getCheckedKeys()
@@ -252,6 +258,9 @@
             return this.$message.error(res.message)
           }
           this.userList = res.data.result
+          let user = []
+          this.userList.forEach(u => user.push(u.username))
+          this.form.user = user.join(',')
         },function(){
           return this.$message.error("请求失败")
         });
