@@ -228,6 +228,7 @@
           if (res.code != "200") {
             return this.$message.error(res.message)
           }
+          this.groupData = res.data.result
           // this.groupData = handleTree(res.data, "deptId")
           this.$refs.groupListTree.setCheckedKeys(this.form.group, true)
         },function(){

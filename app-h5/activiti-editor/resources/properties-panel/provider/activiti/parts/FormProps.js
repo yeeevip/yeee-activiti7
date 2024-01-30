@@ -29,7 +29,6 @@ function generateValueId() {
  * @return {Object} an entryFactory.textField object
  */
 function formFieldTextField(options, getSelectedFormField) {
-  debugger
 
   var id = options.id,
       label = options.label,
