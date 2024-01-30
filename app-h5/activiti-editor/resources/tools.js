@@ -40,36 +40,36 @@ const tools = {
         try {
             await bpmnModeler.importXML(xml);
             container.removeClass('with-error').addClass('with-diagram');
-            await this.registerUserGroupsEvent()
+            await this.registerUserGroupsEvent(bpmnModeler)
         } catch (err) {
             container.removeClass('with-diagram').addClass('with-error');
             container.find('.error pre').text(err.message);
             console.error(err);
         }
     },
-    async registerUserGroupsEvent () {
-    var djsGroup = $(".djs-group").each(function(index) {
-        $(this).unbind("click")
-        $(this).on('click', function() {
-            setTimeout(function () {
-                var candidateUsersElements = $('input[id="activiti-candidateUsers"][type="text"][name="candidateUsers"]');
-                var candidateGroupsElements = $('input[id="activiti-candidateGroups"][type="text"][name="candidateGroups"]');
-                candidateUsersElements.each(function(index) {
-                    $(this).unbind("click")
-                    $(this).on('click', function() {
-                        // alert($(this).val())
-                        vmCandidateDialog.init('user', $(this))
+    async registerUserGroupsEvent (bpmnModeler) {
+        var djsGroup = $(".djs-group").each(function(index) {
+            $(this).unbind("click")
+            $(this).on('click', function() {
+                setTimeout(function () {
+                    var candidateUsersElements = $('input[id="activiti-candidateUsers"][type="text"][name="candidateUsers"]');
+                    var candidateGroupsElements = $('input[id="activiti-candidateGroups"][type="text"][name="candidateGroups"]');
+                    candidateUsersElements.each(function(index) {
+                        $(this).unbind("click")
+                        $(this).on('click', function() {
+                            // alert($(this).val())
+                            vmCandidateDialog.init($, bpmnModeler, 'user', $(this))
+                        });
                     });
-                });
-                candidateGroupsElements.each(function(index) {
-                    $(this).unbind("click")
-                    $(this).on('click', function() {
-                        vmCandidateDialog.init('group', $(this))
+                    candidateGroupsElements.each(function(index) {
+                        $(this).unbind("click")
+                        $(this).on('click', function() {
+                            vmCandidateDialog.init($, bpmnModeler, 'group', $(this))
+                        });
                     });
-                });
-            }, 1000)
+                }, 1000)
+            });
         });
-    });
     },
     /**
      * 通过Json设置颜色
@@ -97,8 +97,8 @@ const tools = {
             }
             console.log(xml)
             var param={
-                    "stringBPMN":xml
-                }
+                "stringBPMN":xml
+            }
             $.ajax({
                 url: publicurl+'activiti7/definition/addDeploymentByString',
                 type: 'POST',

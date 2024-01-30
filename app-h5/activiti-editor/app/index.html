@@ -178,6 +178,8 @@
         dialogVisible: false,
         groupSelect: false,
         docObj: null,
+        $jq: null,
+        $pp: null,
         action: 'user',
         form: {
           group: [],
@@ -196,9 +198,11 @@
 
     },
     methods: {
-      init(action, docObj) {
+      init($jq, $pp, action, docObj) {
 
         this.dialogVisible = true
+        this.$jq = $jq
+        this.$pp = $pp
         this.action = action
         this.docObj = docObj
 
@@ -224,7 +228,7 @@
           if (res.code != "200") {
             return this.$message.error(res.message)
           }
-          this.groupData = res.data.result
+          // this.groupData = handleTree(res.data, "deptId")
           this.$refs.groupListTree.setCheckedKeys(this.form.group, true)
         },function(){
           return this.$message.error("请求失败")
@@ -234,16 +238,20 @@
 
       },
       handleClose(done) {
+        var inputValue = ''
         if (this.action === 'user') {
           if (this.form.group) {
-            this.docObj.val(this.form.user.join(','))
+            inputValue = this.form.user.join(',')
           }
         } else {
           if (this.form.group) {
-            this.docObj.val(this.form.group.join(','))
+            inputValue = this.form.group.join(',')
           }
         }
         this.dialogVisible = false
+
+        this.docObj.val(inputValue)
+        this.docObj.get(0).dispatchEvent(new Event('input', { bubbles: true }))
       },
       handleNodeCheck(data) {
         this.form.group = this.$refs.groupListTree.getCheckedKeys()
@@ -282,6 +290,50 @@
       return object
     }
     return object[url];
+  }
+
+  function handleTree(data, id, parentId, children) {
+    let config = {
+      id: id || 'id',
+      parentId: parentId || 'parentId',
+      childrenList: children || 'children'
+    };
+
+    var childrenListMap = {};
+    var nodeIds = {};
+    var tree = [];
+
+    for (let d of data) {
+      let parentId = d[config.parentId];
+      if (childrenListMap[parentId] == null) {
+        childrenListMap[parentId] = [];
+      }
+      nodeIds[d[config.id]] = d;
+      childrenListMap[parentId].push(d);
+    }
+
+    for (let d of data) {
+      let parentId = d[config.parentId];
+      if (nodeIds[parentId] == null) {
+        tree.push(d);
+      }
+    }
+
+    for (let t of tree) {
+      adaptToChildrenList(t);
+    }
+
+    function adaptToChildrenList(o) {
+      if (childrenListMap[o[config.id]] !== null) {
+        o[config.childrenList] = childrenListMap[o[config.id]];
+      }
+      if (o[config.childrenList]) {
+        for (let c of o[config.childrenList]) {
+          adaptToChildrenList(c);
+        }
+      }
+    }
+    return tree;
   }
 </script>
 
