@@ -147,7 +147,7 @@
       <el-form-item label="用户" :label-width="formLabelWidth" v-if="action === 'user'">
         <el-select v-model="form.user" multiple placeholder="请选择" math-width="100%">
           <el-option
-                  v-for="item in userList"
+                     v-for="item in userList"
                   :key="item.id"
                   :label="item.username"
                   :value="item.username">
@@ -180,8 +180,8 @@
         docObj: null,
         action: 'user',
         form: {
-          group: '',
-          user: ''
+          group: [],
+          user: []
         },
         formLabelWidth: '50px',
         treeDefaultProps: {
@@ -205,8 +205,13 @@
         this.groupData = []
         this.userList = []
 
-        this.form.group = ''
-        this.form.user = ''
+        if (this.action === 'user') {
+          this.form.group = []
+          this.form.user = docObj.val() ? docObj.val().split(',') : []
+        } else {
+          this.form.group = docObj.val() ? docObj.val().split(',') : []
+          this.form.user = []
+        }
 
         let headers =  {
           "Authorization": 'Bearer ' + getUrlParam(window.location.href).tt
@@ -220,6 +225,7 @@
             return this.$message.error(res.message)
           }
           this.groupData = res.data.result
+          this.$refs.groupListTree.setCheckedKeys(this.form.group, true)
         },function(){
           return this.$message.error("请求失败")
         });
@@ -230,17 +236,17 @@
       handleClose(done) {
         if (this.action === 'user') {
           if (this.form.group) {
-            this.docObj.val(this.form.user)
+            this.docObj.val(this.form.user.join(','))
           }
         } else {
           if (this.form.group) {
-            this.docObj.val(this.form.group)
+            this.docObj.val(this.form.group.join(','))
           }
         }
         this.dialogVisible = false
       },
       handleNodeCheck(data) {
-        this.form.group = this.$refs.groupListTree.getCheckedKeys().join(',')
+        this.form.group = this.$refs.groupListTree.getCheckedKeys()
         let query = {
           sysUserVO: {
             deptList : this.$refs.groupListTree.getCheckedKeys()
@@ -258,9 +264,6 @@
             return this.$message.error(res.message)
           }
           this.userList = res.data.result
-          let user = []
-          this.userList.forEach(u => user.push(u.username))
-          this.form.user = user.join(',')
         },function(){
           return this.$message.error("请求失败")
         });
