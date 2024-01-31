@@ -22,6 +22,8 @@
 - 审批节点3，候选组 = bumeng3
 
 ![](doc/activiti7/images/act-editor1.png)
+![](doc/activiti7/images/act-editor2.png)
+![](doc/activiti7/images/act-editor3.png)
 
 ### 2、创建/查看审批流程
 
