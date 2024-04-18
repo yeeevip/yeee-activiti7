@@ -25,7 +25,7 @@ CREATE TABLE `oauth_client_details`  (
 -- ----------------------------
 -- Records of oauth_client_details
 -- ----------------------------
-INSERT INTO `oauth_client_details` VALUES ('yeeee_activiti7', NULL, '$2a$10$y2TZo5p42YuYTnOGe/shXeJPANesqGWtZdNrJrHvRcfy0akWB..aq', 'all', 'password,refresh_token,authorization_code,client_credentials', '', NULL, 864000, 6048000, NULL, 'true');
+INSERT INTO `oauth_client_details` VALUES ('yeee-activiti7', NULL, '96e79218965eb72c92a549dd5a330112', 'all', 'password,refresh_token,authorization_code,client_credentials', '', NULL, 864000, 6048000, NULL, 'true');
 -- ----------------------------
 -- Table structure for oauth_access_token
 -- ----------------------------
@@ -82,15 +82,15 @@ CREATE TABLE `sys_dept`  (
 -- ----------------------------
 -- Records of sys_dept
 -- ----------------------------
-INSERT INTO `sys_dept` VALUES (2, '客服组', 'KF', 1, '-1,1', 0, 2, NULL, '1', '2021-11-09 14:36:03', '1', '2021-12-14 11:20:14');
-INSERT INTO `sys_dept` VALUES (4, '常规组', 'CG', 1, '-1,1', 0, 1, NULL, '1', '2021-12-03 10:17:25', '1', '2021-12-03 10:17:25');
-INSERT INTO `sys_dept` VALUES (5, '核心组', 'HX', 1, '-1,1', 0, 2, NULL, '1', '2021-12-03 10:17:41', '1', '2021-12-03 10:17:41');
-INSERT INTO `sys_dept` VALUES (6, '战略组', 'ZL', 1, '-1,1', 0, 3, NULL, '1', '2021-12-03 10:17:54', '1', '2021-12-03 10:17:54');
-INSERT INTO `sys_dept` VALUES (7, '渠道组', 'QD', 1, '-1,1', 0, 4, NULL, '1', '2021-12-03 10:18:15', '1', '2021-12-03 10:18:15');
-INSERT INTO `sys_dept` VALUES (430, '测试1', '11', 8, '-1,8', 0, 11, NULL, '1', '2021-12-30 21:51:01', '1', '2021-12-30 21:51:01');
-INSERT INTO `sys_dept` VALUES (431, '技术部', 'JS', -1, '-1', 0, 1, NULL, '1', '2022-01-05 17:01:56', '1', '2022-01-05 17:01:56');
-INSERT INTO `sys_dept` VALUES (432, '客户满意部', 'KHMYB', -1, '-1', 0, 5, NULL, '10280', '2022-02-15 11:46:46', '10280', '2022-02-15 11:46:46');
-
+INSERT INTO sys_dept
+(id, name, code, pid, ancestors, status, sort, remark, create_by, create_time, update_by, update_time)
+VALUES(433, '部门1', 'bumeng1', -1, NULL, 0, 0, '', 'admin', '2024-01-04 11:40:16', 'admin', '2024-01-04 11:40:16');
+INSERT INTO sys_dept
+(id, name, code, pid, ancestors, status, sort, remark, create_by, create_time, update_by, update_time)
+VALUES(434, '部门2', 'bumeng2', -1, NULL, 0, 0, '', 'admin', '2024-01-04 11:40:26', 'admin', '2024-01-04 11:40:26');
+INSERT INTO sys_dept
+(id, name, code, pid, ancestors, status, sort, remark, create_by, create_time, update_by, update_time)
+VALUES(435, '部门3', 'bumeng3', -1, NULL, 0, 0, '', 'admin', '2024-01-04 11:40:37', 'admin', '2024-01-04 11:40:37');
 -- ----------------------------
 -- Table structure for sys_menu
 -- ----------------------------
@@ -126,13 +126,13 @@ INSERT INTO sys_menu
 VALUES(4059917154079744, 4059916341400576, '角色管理', 'sys/role/role', NULL, 'icon-geren', 10, 'view/sys/role/role.html', 0, NULL, NULL, '2019-02-11 15:42:24', NULL);
 INSERT INTO sys_menu
 (id, pid, name, url, perm, icon, seq, remark, `type`, create_time, create_by, update_time, update_by)
-VALUES(4059917584143360, 4059916341400576, '资源管理', 'sys/rsco/rsco', NULL, 'icon-editor', 15, 'view/sys/rsco/rsco.html', 0, NULL, NULL, '2019-02-11 15:42:45', NULL);
+VALUES(4059917584143360, 4059916341400576, '菜单管理', 'sys/menu/menu', NULL, 'icon-editor', 15, 'view/sys/menu/menu.html', 0, NULL, NULL, '2019-02-11 15:42:45', NULL);
 INSERT INTO sys_menu
 (id, pid, name, url, perm, icon, seq, remark, `type`, create_time, create_by, update_time, update_by)
 VALUES(4297179758302211, 4059919704003584, '修改', NULL, 'sys:param:upd', NULL, 30, NULL, 1, NULL, 'auto', NULL, 'auto');
 INSERT INTO sys_menu
 (id, pid, name, url, perm, icon, seq, remark, `type`, create_time, create_by, update_time, update_by)
-VALUES(4297735991448577, 4059917154079744, '查看', NULL, 'sys:role:page, sys:role:list, sys:role:info', NULL, 10, NULL, 1, NULL, 'auto', NULL, 'auto');
+VALUES(4297735991448577, 4059917154079744, '查看', NULL, 'sys:role:page, sys:role:list, sys:role:info,sys:role:listSet,sys:role:exist', NULL, 10, NULL, 1, NULL, 'auto', '2024-01-18 17:49:42', 'admin');
 INSERT INTO sys_menu
 (id, pid, name, url, perm, icon, seq, remark, `type`, create_time, create_by, update_time, update_by)
 VALUES(4297735991448578, 4059917154079744, '新增', NULL, 'sys:role:add', NULL, 20, NULL, 1, NULL, 'auto', NULL, 'auto');
@@ -144,37 +144,19 @@ INSERT INTO sys_menu
 VALUES(4297735991448580, 4059917154079744, '删除', NULL, 'sys:role:del', NULL, 40, NULL, 1, NULL, 'auto', NULL, 'auto');
 INSERT INTO sys_menu
 (id, pid, name, url, perm, icon, seq, remark, `type`, create_time, create_by, update_time, update_by)
-VALUES(4297735991448581, 4059917154079744, '导出', NULL, 'sys:role:expt', NULL, 50, NULL, 1, NULL, 'auto', NULL, 'auto');
+VALUES(4297735992218625, 4059917584143360, '查看', NULL, 'sys:menu:page, sys:menu:list, sys:menu:info,sys:menu:listSet', NULL, 10, NULL, 1, NULL, 'auto', '2024-01-18 17:41:19', 'admin');
 INSERT INTO sys_menu
 (id, pid, name, url, perm, icon, seq, remark, `type`, create_time, create_by, update_time, update_by)
-VALUES(4297735991448582, 4059917154079744, '导入', NULL, 'sys:role:impt', NULL, 60, NULL, 1, NULL, 'auto', NULL, 'auto');
+VALUES(4297735992218626, 4059917584143360, '新增', NULL, 'sys:menu:add', NULL, 20, NULL, 1, NULL, 'auto', NULL, 'auto');
 INSERT INTO sys_menu
 (id, pid, name, url, perm, icon, seq, remark, `type`, create_time, create_by, update_time, update_by)
-VALUES(4297735991448583, 4059917154079744, '审核', NULL, 'sys:role:audit', NULL, 70, NULL, 1, NULL, 'auto', NULL, 'auto');
+VALUES(4297735992218627, 4059917584143360, '修改', NULL, 'sys:menu:upd', NULL, 30, NULL, 1, NULL, 'auto', NULL, 'auto');
 INSERT INTO sys_menu
 (id, pid, name, url, perm, icon, seq, remark, `type`, create_time, create_by, update_time, update_by)
-VALUES(4297735992218625, 4059917584143360, '查看', NULL, 'sys:rsco:page, sys:rsco:list, sys:rsco:info', NULL, 10, NULL, 1, NULL, 'auto', NULL, 'auto');
+VALUES(4297735992218628, 4059917584143360, '删除', NULL, 'sys:menu:del', NULL, 40, NULL, 1, NULL, 'auto', NULL, 'auto');
 INSERT INTO sys_menu
 (id, pid, name, url, perm, icon, seq, remark, `type`, create_time, create_by, update_time, update_by)
-VALUES(4297735992218626, 4059917584143360, '新增', NULL, 'sys:rsco:add', NULL, 20, NULL, 1, NULL, 'auto', NULL, 'auto');
-INSERT INTO sys_menu
-(id, pid, name, url, perm, icon, seq, remark, `type`, create_time, create_by, update_time, update_by)
-VALUES(4297735992218627, 4059917584143360, '修改', NULL, 'sys:rsco:upd', NULL, 30, NULL, 1, NULL, 'auto', NULL, 'auto');
-INSERT INTO sys_menu
-(id, pid, name, url, perm, icon, seq, remark, `type`, create_time, create_by, update_time, update_by)
-VALUES(4297735992218628, 4059917584143360, '删除', NULL, 'sys:rsco:del', NULL, 40, NULL, 1, NULL, 'auto', NULL, 'auto');
-INSERT INTO sys_menu
-(id, pid, name, url, perm, icon, seq, remark, `type`, create_time, create_by, update_time, update_by)
-VALUES(4297735992218629, 4059917584143360, '导出', NULL, 'sys:rsco:expt', NULL, 50, NULL, 1, NULL, 'auto', NULL, 'auto');
-INSERT INTO sys_menu
-(id, pid, name, url, perm, icon, seq, remark, `type`, create_time, create_by, update_time, update_by)
-VALUES(4297735992218630, 4059917584143360, '导入', NULL, 'sys:rsco:impt', NULL, 60, NULL, 1, NULL, 'auto', NULL, 'auto');
-INSERT INTO sys_menu
-(id, pid, name, url, perm, icon, seq, remark, `type`, create_time, create_by, update_time, update_by)
-VALUES(4297735992218631, 4059917584143360, '审核', NULL, 'sys:rsco:audit', NULL, 70, NULL, 1, NULL, 'auto', NULL, 'auto');
-INSERT INTO sys_menu
-(id, pid, name, url, perm, icon, seq, remark, `type`, create_time, create_by, update_time, update_by)
-VALUES(4297735995577345, 4059916791092224, '查看', NULL, 'sys:user:page, sys:user:list, sys:user:info', NULL, 10, NULL, 1, NULL, 'auto', NULL, 'auto');
+VALUES(4297735995577345, 4059916791092224, '查看', NULL, 'sys:user:page, sys:user:list, sys:user:info,sys:user:exist,sys:user:getUserInfo', NULL, 10, NULL, 1, NULL, 'auto', '2024-01-18 17:37:47', 'admin');
 INSERT INTO sys_menu
 (id, pid, name, url, perm, icon, seq, remark, `type`, create_time, create_by, update_time, update_by)
 VALUES(4297735995577346, 4059916791092224, '新增', NULL, 'sys:user:add', NULL, 20, NULL, 1, NULL, 'auto', NULL, 'auto');
@@ -186,22 +168,13 @@ INSERT INTO sys_menu
 VALUES(4297735995577348, 4059916791092224, '删除', NULL, 'sys:user:del', NULL, 40, NULL, 1, NULL, 'auto', NULL, 'auto');
 INSERT INTO sys_menu
 (id, pid, name, url, perm, icon, seq, remark, `type`, create_time, create_by, update_time, update_by)
-VALUES(4297735995577349, 4059916791092224, '导出', NULL, 'sys:user:expt', NULL, 50, NULL, 1, NULL, 'auto', NULL, 'auto');
-INSERT INTO sys_menu
-(id, pid, name, url, perm, icon, seq, remark, `type`, create_time, create_by, update_time, update_by)
-VALUES(4297735995577350, 4059916791092224, '导入', NULL, 'sys:user:impt', NULL, 60, NULL, 1, NULL, 'auto', NULL, 'auto');
-INSERT INTO sys_menu
-(id, pid, name, url, perm, icon, seq, remark, `type`, create_time, create_by, update_time, update_by)
-VALUES(4297735995577351, 4059916791092224, '审核', NULL, 'sys:user:audit', NULL, 70, NULL, 1, NULL, 'auto', NULL, 'auto');
-INSERT INTO sys_menu
-(id, pid, name, url, perm, icon, seq, remark, `type`, create_time, create_by, update_time, update_by)
 VALUES(4298067236262912, 4059916791092224, '修改密码', '', 'sys:user:updPwd', '', 80, '', 1, '2019-02-26 16:03:00', 'admin', '2019-02-26 16:03:00', 'admin');
 INSERT INTO sys_menu
 (id, pid, name, url, perm, icon, seq, remark, `type`, create_time, create_by, update_time, update_by)
 VALUES(4347326007383040, 4059916341400576, '组织机构', 'sys/org/org', NULL, 'icon-cluster', 30, NULL, 0, NULL, 'auto', '2019-04-02 12:34:22', 'admin');
 INSERT INTO sys_menu
 (id, pid, name, url, perm, icon, seq, remark, `type`, create_time, create_by, update_time, update_by)
-VALUES(4353221119792134, 4347326007383040, '详情', '', 'sys:dept:info', '', 1, NULL, 1, '2022-05-29 14:52:26', 'admin', '2022-05-29 14:52:26', 'admin');
+VALUES(4353221119792134, 4347326007383040, '详情', '', 'sys:dept:info,sys:dept:page,sys:dept:exist,sys:dept:listSet', '', 1, NULL, 1, '2022-05-29 14:52:26', 'admin', '2024-01-18 17:30:29', 'admin');
 INSERT INTO sys_menu
 (id, pid, name, url, perm, icon, seq, remark, `type`, create_time, create_by, update_time, update_by)
 VALUES(4353221119792135, 4347326007383040, '删除', '', 'sys:dept:del', '', 1, NULL, 1, '2022-05-29 14:53:00', 'admin', '2022-05-29 14:53:00', 'admin');
@@ -223,6 +196,9 @@ VALUES(4353221119792140, 4353221119792138, '流程实例', 'activiti/instance/in
 INSERT INTO sys_menu
 (id, pid, name, url, perm, icon, seq, remark, `type`, create_time, create_by, update_time, update_by)
 VALUES(4353221119792141, 4353221119792138, '代办任务', 'activiti/task/task', '', 'icon-check-circle', 1, NULL, 0, '2023-12-22 10:42:17', 'admin', '2023-12-22 10:42:17', 'admin');
+INSERT INTO sys_menu
+(id, pid, name, url, perm, icon, seq, remark, `type`, create_time, create_by, update_time, update_by)
+VALUES(4353221119792142, 4353221119792138, '历史实例', 'activiti/historyInstance/historyInstance', '', '', 1, NULL, 0, '2024-01-27 23:33:56', 'admin', '2024-01-27 23:33:56', 'admin');
 -- ----------------------------
 -- Table structure for sys_role
 -- ----------------------------
@@ -267,7 +243,12 @@ CREATE TABLE `sys_role_menu`  (
 -- ----------------------------
 -- Records of sys_role_menu
 -- ----------------------------
-
+INSERT INTO sys_role_menu
+(id, role_id, menu_id, remark, create_time, create_by, update_time, update_by)
+VALUES(1742756061720842241, 2, 4353221119792141, NULL, '2024-01-04 11:53:19', 'admin', '2024-01-04 11:53:19', 'admin');
+INSERT INTO sys_role_menu
+(id, role_id, menu_id, remark, create_time, create_by, update_time, update_by)
+VALUES(1742756061733425153, 2, 4353221119792138, NULL, '2024-01-04 11:53:19', 'admin', '2024-01-04 11:53:19', 'admin');
 -- ----------------------------
 -- Table structure for sys_user
 -- ----------------------------
@@ -303,9 +284,18 @@ CREATE TABLE `sys_user`  (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (1, 'admin', '3ab11a8a85f3ef5477e772aa8cb750d2', '超级管理员', NULL, '13888888888', NULL, NULL, 8, NULL, 0, NULL, '2021-07-12 11:24:02', '2022-01-05 17:04:43', '1', '1', '管理员', 1);
-INSERT INTO `sys_user` VALUES (2, 'shenhe', '$2a$10$B3Cxicl0/zR2uAJ1tM55DeuGGiHjDh.BD7XMop1qFoEAfto8g7O3O', '审核员', NULL, '13888888888', NULL, NULL, 131, NULL, 0, NULL, '2021-07-12 11:24:02', '2021-12-16 16:59:44', '1', '1', '管理员', 0);
-
+INSERT INTO sys_user
+(id, username, password, nick_name, email, phone, sex, avatar, dept_id, job_id, state, last_login_time, create_time, update_time, create_by, update_by, remark, super_admin)
+VALUES(1, 'admin', '9db06bcff9248837f86d1a6bcf41c9e7', '超级管理员', NULL, '13888888888', NULL, NULL, 8, NULL, 0, NULL, '2021-07-12 11:24:02', '2023-12-28 15:57:34', '1', 'admin', '管理员', 1);
+INSERT INTO sys_user
+(id, username, password, nick_name, email, phone, sex, avatar, dept_id, job_id, state, last_login_time, create_time, update_time, create_by, update_by, remark, super_admin)
+VALUES(3, 'yonghu1', '9db06bcff9248837f86d1a6bcf41c9e7', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO sys_user
+(id, username, password, nick_name, email, phone, sex, avatar, dept_id, job_id, state, last_login_time, create_time, update_time, create_by, update_by, remark, super_admin)
+VALUES(4, 'yonghu2', '9db06bcff9248837f86d1a6bcf41c9e7', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO sys_user
+(id, username, password, nick_name, email, phone, sex, avatar, dept_id, job_id, state, last_login_time, create_time, update_time, create_by, update_by, remark, super_admin)
+VALUES(5, 'yonghu3', '9db06bcff9248837f86d1a6bcf41c9e7', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 -- ----------------------------
 -- Table structure for sys_user_dept
 -- ----------------------------
@@ -321,7 +311,21 @@ CREATE TABLE `sys_user_dept`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `idx_parent_id`(`user_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '部门表' ROW_FORMAT = Dynamic;
-
+INSERT INTO sys_user_dept
+(id, user_id, dept_id, create_by, create_time, update_by, update_time)
+VALUES(2, 1, 432, 'admin', '2023-12-28 15:57:34', 'admin', '2023-12-28 15:57:34');
+INSERT INTO sys_user_dept
+(id, user_id, dept_id, create_by, create_time, update_by, update_time)
+VALUES(3, 1, 431, 'admin', '2023-12-28 15:57:34', 'admin', '2023-12-28 15:57:34');
+INSERT INTO sys_user_dept
+(id, user_id, dept_id, create_by, create_time, update_by, update_time)
+VALUES(4, 3, 433, 'admin', '2024-01-04 11:51:27', 'admin', '2024-01-04 11:51:27');
+INSERT INTO sys_user_dept
+(id, user_id, dept_id, create_by, create_time, update_by, update_time)
+VALUES(5, 4, 434, 'admin', '2024-01-04 11:51:37', 'admin', '2024-01-04 11:51:37');
+INSERT INTO sys_user_dept
+(id, user_id, dept_id, create_by, create_time, update_by, update_time)
+VALUES(6, 5, 435, 'admin', '2024-01-04 11:51:47', 'admin', '2024-01-04 11:51:47');
 -- ----------------------------
 -- Table structure for sys_user_role
 -- ----------------------------
@@ -339,9 +343,21 @@ CREATE TABLE `sys_user_role`  (
   INDEX `idx_role_id`(`role_id`) USING BTREE,
   INDEX `idx_user_role`(`role_id`, `user_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 367 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = '用户角色关联表' ROW_FORMAT = Dynamic;
-
 INSERT INTO sys_user_role
 (id, user_id, role_id, create_by, create_time, update_by, update_time)
-VALUES(2, 1, 2, 'admin', '2023-12-22 15:28:22', 'admin', '2023-12-22 15:28:22');
+VALUES(5, 1, 1, 'admin', '2023-12-28 15:57:34', 'admin', '2023-12-28 15:57:34');
+INSERT INTO sys_user_role
+(id, user_id, role_id, create_by, create_time, update_by, update_time)
+VALUES(6, 1, 2, 'admin', '2023-12-28 15:57:34', 'admin', '2023-12-28 15:57:34');
+INSERT INTO sys_user_role
+(id, user_id, role_id, create_by, create_time, update_by, update_time)
+VALUES(7, 3, 2, 'admin', '2024-01-04 11:51:27', 'admin', '2024-01-04 11:51:27');
+INSERT INTO sys_user_role
+(id, user_id, role_id, create_by, create_time, update_by, update_time)
+VALUES(8, 4, 2, 'admin', '2024-01-04 11:51:37', 'admin', '2024-01-04 11:51:37');
+INSERT INTO sys_user_role
+(id, user_id, role_id, create_by, create_time, update_by, update_time)
+VALUES(9, 5, 2, 'admin', '2024-01-04 11:51:47', 'admin', '2024-01-04 11:51:47');
+
 
 SET FOREIGN_KEY_CHECKS = 1;
