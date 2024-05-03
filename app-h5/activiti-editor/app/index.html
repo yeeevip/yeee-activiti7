@@ -12,6 +12,18 @@
   <link rel="stylesheet" href="https://npm.elemecdn.com/element-ui/lib/theme-chalk/index.css">
 
   <style>
+    .tooltip {
+      position: absolute;
+      background-color: #333;
+      color: #fff;
+      padding: 5px 10px;
+      border-radius: 5px;
+      /* 更多的样式可以根据需要添加 */
+    }
+
+    .hidden {
+      display: none;
+    }
     .item{
       display: none;
       cursor: pointer;
@@ -161,6 +173,8 @@
   </span>
   </el-dialog>
 </div>
+
+<div id="tooltipBox"></div>
 
 
 <script src="index.js"></script>

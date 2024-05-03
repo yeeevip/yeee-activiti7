@@ -21,6 +21,7 @@
         <template slot-scope="scope">
           <el-button type="text" size="small" v-if="scope.row.status === 'RUNNING'" @click="suspendHandle(scope.row.id)">暂停</el-button>
           <el-button type="text" size="small" v-if="scope.row.status === 'SUSPENDED'" @click="resumeHandle(scope.row.id)">唤醒</el-button>
+          <el-button type="text" size="small" @click="lookBpmn(scope.row.deploymentId, scope.row.resourceName, scope.row.id)">查看</el-button>
           <el-button type="text" size="small" @click="delHandle(scope.row.id)">删除</el-button>
         </template>
       </el-table-column>
@@ -39,6 +40,7 @@
 
 <script>
   import grid from '@/mixins/grid'
+  import * as index from "@/utils";
   export default {
     mixins: [grid],
     data () {
@@ -81,6 +83,11 @@
             }
           })
         }).catch(() => {})
+      },
+      lookBpmn (depId, rName, instanceId) {
+        let api = index.baseUrl2()
+        let token = localStorage.getItem('yeee-manageweb-token')
+        window.open(api + 'activiti-editor/index.html?type=lookBpmn&deploymentFileUUID=' + depId + '&deploymentName=' + rName+ '&instanceId=' + instanceId + '&tt=' + token, '_blank')
       }
     },
     components: {

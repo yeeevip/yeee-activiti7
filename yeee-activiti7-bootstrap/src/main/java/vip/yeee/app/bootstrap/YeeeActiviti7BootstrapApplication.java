@@ -10,6 +10,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 @MapperScan({"vip.yeee.app.sys.manage.domain.mysql.mapper"
         , "vip.yeee.app.blog.manage.domain.mysql.mapper"
+        , "vip.yeee.app.activiti7.manage.domain.mysql.mapper"
         , "vip.yeee.app.blog.client.domain.mysql.mapper"})
 @ComponentScan({"vip.yeee.app"})
 public class YeeeActiviti7BootstrapApplication {

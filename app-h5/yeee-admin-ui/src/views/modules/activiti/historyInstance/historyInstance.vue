@@ -14,6 +14,11 @@
       <el-table-column prop="startTime" label="开始时间" header-align="center" align="center"></el-table-column>
       <el-table-column prop="endTime" label="结束时间" header-align="center" align="center"></el-table-column>
       <el-table-column prop="duration" label="审批用时" header-align="center" align="center"></el-table-column>
+      <el-table-column label="操作" fixed="right" header-align="center" align="center" width="80">
+        <template slot-scope="scope">
+          <el-button type="text" size="small" @click="lookBpmn(scope.row.deploymentId, scope.row.resourceName, scope.row.id)">查看</el-button>
+        </template>
+      </el-table-column>
     </el-table>
     <el-pagination v-if="this.gridOptions.isPage"
       @size-change="sizeChangeHandle"
@@ -29,6 +34,7 @@
 
 <script>
   import grid from '@/mixins/grid'
+  import * as index from "@/utils";
   export default {
     mixins: [grid],
     data () {
@@ -41,6 +47,11 @@
       }
     },
     methods: {
+      lookBpmn (depId, rName, instanceId) {
+        let api = index.baseUrl2()
+        let token = localStorage.getItem('yeee-manageweb-token')
+        window.open(api + 'activiti-editor/index.html?type=lookBpmn&deploymentFileUUID=' + depId + '&deploymentName=' + rName+ '&instanceId=' + instanceId + '&tt=' + token, '_blank')
+      }
     },
     components: {
     }

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="vip.yeee.app.activiti7.manage.domain.mysql.mapper.Activiti7StatisticsMapper">
+
+    <select id="getKeyIndicators" resultType="vip.yeee.app.activiti7.manage.model.KeyIndicatorsVo">
+        SELECT
+            (select count(*) from act_re_procdef) definitionCount,
+            (null) todayDefinitionCount,
+            (select count(DISTINCT PROC_INST_ID_) from act_hi_procinst where DELETE_REASON_ is null) instanceCount,
+            (select count(DISTINCT PROC_INST_ID_) from act_hi_procinst where DELETE_REASON_ is null and START_TIME_ between #{startTime} and #{endTime}) todayInstanceCount,
+            (select count(*) from act_hi_taskinst) taskCount,
+            (select count(*) from act_hi_taskinst where START_TIME_ between #{startTime} and #{endTime}) todayTaskCount,
+            (select count(*) from sys_user) userCount,
+            (select count(*) from sys_user where create_time between #{startTime} and #{endTime}) todayUserCount
+    </select>
+
+    <select id="getTop5InstanceCountRecent7Day" resultType="map">
+        select
+                t1.KEY_ id,
+                t1.NAME_ name,
+                date_format(ahpi.START_TIME_,'%Y-%m-%d') createTime,
+                count(DISTINCT ahpi.PROC_INST_ID_) count
+        from (
+                SELECT
+                    arp.KEY_,
+                    arp.NAME_,
+                    count(DISTINCT ahpi.PROC_INST_ID_) count
+                FROM act_hi_procinst ahpi
+                JOIN act_re_procdef arp ON arp.ID_ = ahpi.PROC_DEF_ID_
+                where
+                    ahpi.DELETE_REASON_ is null
+                GROUP BY
+                    KEY_
+                order by count desc
+                limit 5
+            ) t1
+        JOIN act_re_procdef arp ON arp.KEY_ = t1.KEY_
+        join act_hi_procinst ahpi ON ahpi.PROC_DEF_ID_ = arp.ID_
+        where
+            ahpi.START_TIME_ BETWEEN #{startTime} and #{endTime} and ahpi.DELETE_REASON_ is null
+        GROUP BY
+            id,createTime
+    </select>
+
+    <select id="getTop5InstanceCountTotal" resultType="map">
+        SELECT
+            arp.KEY_ id,
+            arp.NAME_ name,
+            count(DISTINCT ahpi.PROC_INST_ID_) count
+        FROM act_hi_procinst ahpi
+            JOIN act_re_procdef arp ON arp.ID_ = ahpi.PROC_DEF_ID_
+        where
+            ahpi.DELETE_REASON_ is null
+        GROUP BY
+            KEY_
+        order by count desc
+            limit 5
+    </select>
+
+    <select id="getTaskCountRecentDay" resultType="map">
+        select
+            date_format(aht.START_TIME_,'%Y-%m-%d') createTime,
+            count(*) totalCount,
+            sum(if(aht.END_TIME_ is null, 0, 1)) completedCount
+        from act_hi_taskinst aht
+                 JOIN act_re_procdef arp ON aht.PROC_DEF_ID_ = arp.ID_
+        where
+            aht.START_TIME_ between #{startTime} and #{endTime}
+        GROUP BY
+            createTime
+    </select>
+</mapper>

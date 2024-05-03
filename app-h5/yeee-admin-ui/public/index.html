@@ -8,7 +8,9 @@
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title><%= webpackConfig.name %></title>
     <!--[if lt IE 11]><script>window.location.href='/html/ie.html';</script><![endif]-->
-	  <style>
+    <link rel="stylesheet" href="static/layui/layui.css" media="all">
+    <script src="static/layui/layui.js" charset="utf-8"></script>
+    <style>
     html,
     body,
     #app {
@@ -204,5 +206,17 @@
 		    <div class="load_title">正在加载系统资源，请耐心等待</div>
         </div>
 	</div>
+
+    <script>
+      layui.config({
+        base: "static/layui/lay/modules/",
+        version: true
+      }).extend({
+        echarts: 'echarts/echarts', // echarts图表扩展
+        echartsTheme: 'echarts/echartsTheme', // echarts图表主题扩展
+      });
+    </script>
+
   </body>
 </html>
+

@@ -86,6 +86,34 @@ const tools = {
             });
         }
     },
+    setUserTaskTipMsg(deid, msg) {
+        var tooltip = $('#tooltipBox');
+        var targetElement = $("[data-element-id="+ deid + "]");
+        tooltip.append('<div id="tooltipBox-' + deid + '" class="tooltip hidden">' + msg + '</div>')
+        if (targetElement.length > 0) {
+            // 当鼠标悬浮在目标元素上时显示提示
+            targetElement.mouseenter(function(e) {
+                // 计算提示的位置
+                var offset = targetElement.offset();
+                $("#tooltipBox-"+ deid).css({
+                    top: offset.top + 60, // 你可以根据需要调整这些值
+                    left: offset.left + 20
+                }).removeClass('hidden'); // 显示提示
+            });
+
+            // 当鼠标离开目标元素时隐藏提示
+            targetElement.mouseleave(function() {
+                $("#tooltipBox-"+ deid).addClass('hidden'); // 隐藏提示
+            });
+
+            // 确保在点击SVG外部时隐藏提示
+            $(document).click(function(e) {
+                if (!targetElement.is(e.target) && !tooltip.is(e.target) && !targetElement.has(e.target).length) {
+                    $("#tooltipBox-"+ deid).addClass('hidden');
+                }
+            });
+        }
+    },
     /**
      * 保存bpmn对象
      * @param {object} bpmnModeler bpmn对象

@@ -55,13 +55,20 @@
 
 用户3登录自己的账号yonghu3完成审批
 
-![](doc/activiti7/images/act-manage5.png)
+![](doc/activiti7/images/act-manage7.png)
 
 ### 4、再次查看审批流程
 
 登录admin账号，进入菜单 - 工作流 > 流程定义 > 列表中的‘测试流程1’这个审批流程不在了，说明已经完成结束了
 
 ![](doc/activiti7/images/act-manage6.png)
+
+
+### 4、其他
+
+![](doc/activiti7/images/act-statistics.png)
+![](doc/activiti7/images/act-manage8.png)
+![](doc/activiti7/images/act-manage9.png)
 
 ## 快速开始
 

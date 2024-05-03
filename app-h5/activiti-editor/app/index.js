@@ -66,15 +66,22 @@ $(function () {
                 instanceId
             }
             $.ajax({
-                url: publicurl+'activitiHistory/gethighLine',
+                url: publicurl+'activiti7/instance/taskHighlight',
                 type: 'GET',
+                headers: {
+                    "Authorization": 'Bearer ' + tools.getUrlParam(window.location.href).tt
+                },
                 data: param1,
                 dataType:'json',
                 success: function (result) {
-                  var ColorJson=tools.getByColor(result.obj)
+                  var ColorJson=tools.getByColor(result.data)
+                    var highlightData = result.data
                     $.ajax({
-                        url: publicurl+'processDefinition/getDefinitionXML',
+                        url: publicurl+'activiti7/definition/xml',
                         type: 'GET',
+                        headers: {
+                            "Authorization": 'Bearer ' + tools.getUrlParam(window.location.href).tt
+                        },
                         data: param,
                         dataType:'text',
                         success: function (result) {
@@ -83,6 +90,14 @@ $(function () {
                             setTimeout(function () {
                                 for (var i in ColorJson) {
                                     tools.setColor(ColorJson[i],bpmnModeler)
+                                }
+                            }, 200)
+                            setTimeout(function () {
+                                for (let key in highlightData.finishedUserTaskMap) {
+                                    tools.setUserTaskTipMsg(key, '执行人：' + highlightData.finishedUserTaskMap[key])
+                                }
+                                for (let key in highlightData.unFinishedUserTaskMap) {
+                                    tools.setUserTaskTipMsg(key, '候选人：' + highlightData.unFinishedUserTaskMap[key])
                                 }
                             }, 200)
                         },
