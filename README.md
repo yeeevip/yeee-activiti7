@@ -127,7 +127,7 @@ cd yeee-activiti7 && mvn clean install && java -jar yeee-activiti7-bootstrap/tar
 
 ## 交流群
 
-- 作者QQ：1324459373
+- 作者QQ：394230080
 - 招有经验尽量会全栈的技术，有意向的可以来我们**接单群**
 
 | 微信群                                      | QQ群                                                                                 | 技术接单群                                                                           |
