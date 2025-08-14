@@ -115,6 +115,12 @@ mvn clean install
 # 下载yeee-activiti7项目
 git clone https://gitee.com/yeeevip/yeee-activiti7.git
 
+# 编译流程制作ui
+cd yeee-activiti7/app-h5/activiti-editor 
+npm install --registry=https://registry.npmmirror.com --force
+npm run all
+
+
 # 运行博客服务
 cd yeee-activiti7 
 mvn clean install 
@@ -122,13 +128,8 @@ java -jar yeee-activiti7-bootstrap/target/yeee-activiti7-bootstrap-1.0.0-SNAPSHO
 
 # 运行管理端ui
 cd yeee-activiti7/app-h5/yeee-admin-ui 
-npm install 
+npm install --registry=https://registry.npmmirror.com --force
 npm run dev
-
-# 编译流程制作ui
-cd yeee-activiti7/app-h5/activiti-editor 
-npm install --registry=https://registry.npmmirror.com 
-npm run all
 
 - 管理员账号密码：admin/111111
 
