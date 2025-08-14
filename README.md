@@ -98,32 +98,48 @@ yeee-activiti7
 
 - jdk1.8
 - mysql >= 5.7
+- redis
+- maven >= 3.6
+- node.js >= 18
+
+- 需要远程安装配置请联系，作者QQ：394230080
 
 ```
 # 下载yeee-memo脚手架工程
 git clone https://gitee.com/yeeevip/yeee-memo.git
 
 # 打包[JavaWeb通用脚手架]
-cd yeee-memo/memo-parent && mvn clean install
+cd yeee-memo/memo-parent 
+mvn clean install
 
 # 下载yeee-activiti7项目
 git clone https://gitee.com/yeeevip/yeee-activiti7.git
 
+# 运行博客服务
+cd yeee-activiti7 
+mvn clean install 
+java -jar yeee-activiti7-bootstrap/target/yeee-activiti7-bootstrap-1.0.0-SNAPSHOT.jar
+
 # 运行管理端ui
-cd yeee-activiti7/app-h5/yeee-admin-ui && npm install && npm run dev
+cd yeee-activiti7/app-h5/yeee-admin-ui 
+npm install 
+npm run dev
 
 # 编译流程制作ui
-cd yeee-activiti7/app-h5/activiti-editor && npm install --registry=https://registry.npmmirror.com && npm run all
+cd yeee-activiti7/app-h5/activiti-editor 
+npm install --registry=https://registry.npmmirror.com 
+npm run all
 
-# 运行博客服务
-cd yeee-activiti7 && mvn clean install && java -jar yeee-activiti7-bootstrap/target/yeee-activiti7-bootstrap-1.0.0-SNAPSHOT.jar
+- 管理员账号密码：admin/111111
+
 ```
 
-### 其他说明
+- 使用idea运行步骤视频
 
-1. 欢迎提交 [PR](https://www.yeee.vip)
+| 公众号回复：yeee-activiti7                 |     
+|--------------------------------------|
+| ![作者微信](doc/yeee/images/yeee_wp.jpg) |  
 
-2. 欢迎提交 [issue](https://gitee.com/yeeevip/yeee-blog/issues)，请写清楚遇到问题的原因、开发环境、复显步骤。
 
 ## 交流群
 
