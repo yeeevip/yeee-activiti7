@@ -4,7 +4,7 @@
   "description": "A bpmn-js modeler + properties panel example",
   "main": "app/index.js",
   "scripts": {
-    "all": "grunt",
+    "build": "grunt",
     "dev": "grunt auto-build"
   },
   "repository": {

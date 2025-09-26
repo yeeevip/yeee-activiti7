@@ -1,10 +1,10 @@
 <template>
   <div class="mod-definition">
-    <el-form :inline="true" :model="dataForm" @keyup.enter.native="listData()">
+    <el-form :inline="true" :model="dataForm" @keyup.enter="listData()">
       <el-form-item>
-        <el-button size="small" @click="listData()">刷新列表</el-button>
-        <el-button size="small" type="primary" @click="addBpmn()">在线制作流程</el-button>
-        <el-button size="small" type="danger" @click="delHandle()" :disabled="dataListSelections.length <= 0">删除</el-button>
+        <el-button size="default" @click="listData()">查询</el-button>
+        <el-button size="default" type="primary" @click="addBpmn()">在线制作流程</el-button>
+        <el-button size="default" type="danger" @click="delHandle()" :disabled="dataListSelections.length <= 0">删除</el-button>
       </el-form-item>
     </el-form>
     <el-table :data="dataList" border stripe v-loading="dataListLoading" :max-height="tableHeight"
@@ -17,10 +17,10 @@
       <el-table-column prop="key" label="KEY" header-align="center" align="center"></el-table-column>
       <el-table-column prop="version" label="部署版本" header-align="center" align="center"></el-table-column>
       <el-table-column label="操作" fixed="right" header-align="center" align="center" width="200">
-        <template slot-scope="scope">
-          <el-button type="text" size="small" @click="lookBpmn(scope.row.deploymentID, scope.row.resourceName)">查看</el-button>
-          <el-button type="text" size="small" @click="createInstance(scope.row.processDefinitionID)">新建实例</el-button>
-          <el-button type="text" size="small" @click="delHandle(scope.row.id)">删除</el-button>
+        <template #default="scope">
+          <el-button type="text" size="small" @click="lookBpmn(scope.row.deploymentID, scope.row.resourceName)" :icon="Document" title="查看"></el-button>
+          <el-button type="text" size="small" @click="createInstance(scope.row.processDefinitionID)" :icon="Plus" title="新建实例"></el-button>
+          <el-button type="text" size="small" @click="delHandle(scope.row.id)" :icon="Delete" title="删除"></el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -31,7 +31,7 @@
       :page-sizes="pageSizes"
       :page-size="pageSize"
       :total="total"
-      layout="total, sizes, prev, pager, next, jumper">
+      layout="->, total, sizes, prev, pager, next, jumper">
     </el-pagination>
   </div>
 </template>
@@ -39,6 +39,8 @@
 <script>
   import grid from '@/mixins/grid'
   import * as index from '@/utils/index'
+  import { Document, Delete, Plus } from '@element-plus/icons-vue'
+  import { markRaw } from 'vue'
   export default {
     mixins: [grid],
     data () {
@@ -49,7 +51,11 @@
           delUrl: '/activiti7/definition/delete',
           delKey: 'deploymentID'
         },
-        dataForm: {}
+        dataForm: {},
+        // 图标组件（使用 markRaw 避免响应式包装）
+        Document: markRaw(Document),
+        Delete: markRaw(Delete),
+        Plus: markRaw(Plus)
       }
     },
     methods: {

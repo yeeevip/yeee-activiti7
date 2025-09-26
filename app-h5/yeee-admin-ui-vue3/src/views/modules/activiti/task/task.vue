@@ -1,8 +1,8 @@
 <template>
   <div class="mod-task">
-    <el-form :inline="true" :model="dataForm" @keyup.enter.native="listData()">
+    <el-form :inline="true" :model="dataForm" @keyup.enter="listData()">
       <el-form-item>
-        <el-button size="small" @click="listData()">刷新列表</el-button>
+        <el-button size="default" @click="listData()">查询</el-button>
       </el-form-item>
     </el-form>
     <el-table :data="dataList" border stripe v-loading="dataListLoading" :max-height="tableHeight"
@@ -15,9 +15,9 @@
       <el-table-column prop="assignee" label="办理人" header-align="center" align="center"></el-table-column>
       <el-table-column prop="createdDate" label="创建时间" header-align="center" align="center"></el-table-column>
       <el-table-column label="操作" fixed="right" header-align="center" align="center" width="200">
-        <template slot-scope="scope">
-          <el-button type="success" size="small" @click="completeHandle(scope.row.id, 1)">通过</el-button>
-          <el-button type="info" size="small" @click="completeHandle(scope.row.id, 0)">驳回</el-button>
+        <template #default="scope">
+          <el-button type="success" size="small" @click="completeHandle(scope.row.id, 1)" :icon="Check" title="通过">通过</el-button>
+          <el-button type="info" size="small" @click="completeHandle(scope.row.id, 0)" :icon="Close" title="驳回">驳回</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -28,13 +28,15 @@
       :page-sizes="pageSizes"
       :page-size="pageSize"
       :total="total"
-      layout="total, sizes, prev, pager, next, jumper">
+      layout="->, total, sizes, prev, pager, next, jumper">
     </el-pagination>
   </div>
 </template>
 
 <script>
   import grid from '@/mixins/grid'
+  import { Check, Close } from '@element-plus/icons-vue'
+  import { markRaw } from 'vue'
   export default {
     mixins: [grid],
     data () {
@@ -43,7 +45,10 @@
           isQuery: false,
           listUrl: '/activiti7/task/list'
         },
-        dataForm: {}
+        dataForm: {},
+        // 图标组件（使用 markRaw 避免响应式包装）
+        Check: markRaw(Check),
+        Close: markRaw(Close)
       }
     },
     methods: {

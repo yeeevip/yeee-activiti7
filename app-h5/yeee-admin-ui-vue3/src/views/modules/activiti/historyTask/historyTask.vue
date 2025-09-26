@@ -1,8 +1,8 @@
 <template>
   <div class="mod-task">
-    <el-form :inline="true" :model="dataForm" @keyup.enter.native="listData()">
+    <el-form :inline="true" :model="dataForm" @keyup.enter="listData()">
       <el-form-item>
-        <el-button size="small" @click="listData()">刷新列表</el-button>
+        <el-button size="default" @click="listData()">查询</el-button>
       </el-form-item>
     </el-form>
     <el-table :data="dataList" border stripe v-loading="dataListLoading" :max-height="tableHeight"
@@ -21,7 +21,7 @@
       :page-sizes="pageSizes"
       :page-size="pageSize"
       :total="total"
-      layout="total, sizes, prev, pager, next, jumper">
+      layout="->, total, sizes, prev, pager, next, jumper">
     </el-pagination>
   </div>
 </template>

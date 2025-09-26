@@ -110,57 +110,119 @@ export default {
         todayTaskCount: null,
         userCount: null,
         todayUserCount: null
-      }
+      },
+      // resize 处理器引用
+      resizeHandler: null
     }
   },
   mounted () {
     this.getKeyIndicators()
-    this.initCharts()
+    // 使用 nextTick 确保 DOM 已渲染完成
+    this.$nextTick(() => {
+      this.initCharts()
+    })
   },
-  created () {
-    this.initCharts()
+  
+  // Vue 3 中推荐在 unmounted 中清理资源
+  beforeUnmount() {
+    // 清理 resize 监听器
+    if (this.resizeHandler) {
+      window.removeEventListener('resize', this.resizeHandler)
+    }
+    
+    // 销毁图表实例
+    const chartIds = ['echarts-records', 'echarts-pies', 'echarts-dataset', 'echarts-map']
+    chartIds.forEach(id => {
+      const element = document.getElementById(id)
+      if (element && element._echarts_instance_) {
+        element._echarts_instance_.dispose()
+      }
+    })
   },
   methods: {
     initCharts() {
-      var _this = this;
+      const _this = this;
+      // 检查layui是否可用
+      if (typeof layui === 'undefined') {
+        console.error('layui is not loaded, retrying...')
+        // 延迟重试
+        setTimeout(() => {
+          this.initCharts()
+        }, 100)
+        return
+      }
+      
       layui.use(['layer', 'echarts'], function () {
-        var $ = layui.jquery,
+        const $ = layui.jquery,
           layer = layui.layer,
           echarts = layui.echarts;
 
-        /**
-         * 报表功能
-         */
-        var echartsRecords = echarts.init(document.getElementById('echarts-records'), 'walden');
-        _this.top5InstanceCountRecent7Day(echartsRecords)
+        try {
+          /**
+           * 报表功能
+           */
+          const recordsElement = document.getElementById('echarts-records')
+          if (recordsElement) {
+            const echartsRecords = echarts.init(recordsElement, 'walden')
+            _this.top5InstanceCountRecent7Day(echartsRecords)
+          }
 
-        /**
-         * 玫瑰图表
-         */
-        var echartsPies = echarts.init(document.getElementById('echarts-pies'), 'walden');
-        _this.top5InstanceCountTotal(echartsPies)
+          /**
+           * 玫瑰图表
+           */
+          const piesElement = document.getElementById('echarts-pies')
+          if (piesElement) {
+            const echartsPies = echarts.init(piesElement, 'walden')
+            _this.top5InstanceCountTotal(echartsPies)
+          }
 
-        /**
-         * 柱状图
-         */
-        var echartsDataset = echarts.init(document.getElementById('echarts-dataset'), 'walden');
-        _this.taskCountRecent3Day(echartsDataset)
+          /**
+           * 柱状图
+           */
+          const datasetElement = document.getElementById('echarts-dataset')
+          if (datasetElement) {
+            const echartsDataset = echarts.init(datasetElement, 'walden')
+            _this.taskCountRecent3Day(echartsDataset)
+          }
 
-        /**
-         * 过去7天任务创建和任务统计折线图
-         */
-        var echartsline = echarts.init(document.getElementById('echarts-map'), 'walden');
-        _this.taskCountRecent7Day(echartsline)
+          /**
+           * 过去7天任务创建和任务统计折线图
+           */
+          const mapElement = document.getElementById('echarts-map')
+          if (mapElement) {
+            const echartsline = echarts.init(mapElement, 'walden')
+            _this.taskCountRecent7Day(echartsline)
+          }
 
-        // echarts 窗口缩放自适应
-        window.onresize = function () {
-          echartsRecords.resize();
-          echartsPies.resize();
-          echartsDataset.resize();
-          echartsline.resize();
+          // echarts 窗口缩放自适应 - 使用更安全的方式
+          _this.setupChartResize()
+        } catch (error) {
+          console.error('初始化图表时出错:', error)
         }
 
-      });
+      })
+    },
+    
+    // 设置图表自适应
+    setupChartResize() {
+      // 移除之前的监听器（如果存在）
+      if (this.resizeHandler) {
+        window.removeEventListener('resize', this.resizeHandler)
+      }
+      
+      // 创建新的监听器
+      this.resizeHandler = () => {
+        // 获取所有图表实例并调用resize
+        const chartIds = ['echarts-records', 'echarts-pies', 'echarts-dataset', 'echarts-map']
+        chartIds.forEach(id => {
+          const element = document.getElementById(id)
+          if (element && element._echarts_instance_) {
+            element._echarts_instance_.resize()
+          }
+        })
+      }
+      
+      window.addEventListener('resize', this.resizeHandler)
     },
     top5InstanceCountRecent7Day(echartsRecords) {
       this.$http.get('/activiti7/statistics/top5InstanceCountRecent7Day').then(({data: res}) => {
@@ -169,9 +231,9 @@ export default {
         }
         console.log(res)
 
-        var data = res.data
+        const data = res.data
 
-        var optionRecords = {
+        const optionRecords = {
           title: {
             text: '排名前5的流程部署产生的实例数'
           },
@@ -241,9 +303,9 @@ export default {
         }
         console.log(res)
 
-        var data = res.data
+        const data = res.data
 
-        var optionPies = {
+        const optionPies = {
           title: {
             text: '排名前五流程部署产生实例数',
             // left: 'center'
@@ -296,9 +358,9 @@ export default {
         }
         console.log(res)
 
-        var data = res.data
+        const data = res.data
 
-        var optionDataset = {
+        const optionDataset = {
           legend: {
             data:["任务创建数","任务完成数"],
             top:20
@@ -338,9 +400,9 @@ export default {
         }
         console.log(res)
 
-        var data = res.data
+        const data = res.data
 
-        var option = {
+        const option = {
           title: {
             text: '过去7天任务创建数和完成数统计'
           },

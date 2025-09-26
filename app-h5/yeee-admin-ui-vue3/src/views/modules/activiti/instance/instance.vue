@@ -1,9 +1,9 @@
 <template>
   <div class="mod-instance">
-    <el-form :inline="true" :model="dataForm" @keyup.enter.native="listData()">
+    <el-form :inline="true" :model="dataForm" @keyup.enter="listData()">
       <el-form-item>
-        <el-button size="small" @click="listData()">刷新列表</el-button>
-        <el-button size="small" type="danger" @click="delHandle()" :disabled="dataListSelections.length <= 0">删除</el-button>
+        <el-button size="default" @click="listData()">查询</el-button>
+        <el-button size="default" type="danger" @click="delHandle()" :disabled="dataListSelections.length <= 0">删除</el-button>
       </el-form-item>
     </el-form>
     <el-table :data="dataList" border stripe v-loading="dataListLoading" :max-height="tableHeight"
@@ -17,12 +17,12 @@
       <el-table-column prop="status" label="状态" header-align="center" align="center"></el-table-column>
 <!--      <el-table-column prop="processDefinitionVersion" label="版本" header-align="center" align="center"></el-table-column>-->
       <el-table-column prop="curTask" label="当前任务" header-align="center" align="center"></el-table-column>
-      <el-table-column label="操作" fixed="right" header-align="center" align="center" width="100">
-        <template slot-scope="scope">
-          <el-button type="text" size="small" v-if="scope.row.status === 'RUNNING'" @click="suspendHandle(scope.row.id)">暂停</el-button>
-          <el-button type="text" size="small" v-if="scope.row.status === 'SUSPENDED'" @click="resumeHandle(scope.row.id)">唤醒</el-button>
-          <el-button type="text" size="small" @click="lookBpmn(scope.row.deploymentId, scope.row.resourceName, scope.row.id)">查看</el-button>
-          <el-button type="text" size="small" @click="delHandle(scope.row.id)">删除</el-button>
+      <el-table-column label="操作" fixed="right" header-align="center" align="center" width="150">
+        <template #default="scope">
+          <el-button v-if="scope.row.status === 'RUNNING'" type="text" size="small" @click="suspendHandle(scope.row.id)" :icon="VideoPause" title="暂停"></el-button>
+          <el-button v-if="scope.row.status === 'SUSPENDED'" type="text" size="small" @click="resumeHandle(scope.row.id)" :icon="VideoPlay" title="唤醒"></el-button>
+          <el-button type="text" size="small" @click="lookBpmn(scope.row.deploymentId, scope.row.resourceName, scope.row.id)" :icon="Document" title="查看"></el-button>
+          <el-button type="text" size="small" @click="delHandle(scope.row.id)" :icon="Delete" title="删除"></el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -33,7 +33,7 @@
       :page-sizes="pageSizes"
       :page-size="pageSize"
       :total="total"
-      layout="total, sizes, prev, pager, next, jumper">
+      layout="->, total, sizes, prev, pager, next, jumper">
     </el-pagination>
   </div>
 </template>
@@ -41,6 +41,8 @@
 <script>
   import grid from '@/mixins/grid'
   import * as index from "@/utils";
+  import { Document, Delete, VideoPause, VideoPlay } from '@element-plus/icons-vue'
+  import { markRaw } from 'vue'
   export default {
     mixins: [grid],
     data () {
@@ -50,7 +52,12 @@
           listUrl: '/activiti7/instance/list',
           delUrl: '/activiti7/instance/delete'
         },
-        dataForm: {}
+        dataForm: {},
+        // 图标组件（使用 markRaw 避免响应式包装）
+        Document: markRaw(Document),
+        Delete: markRaw(Delete),
+        VideoPause: markRaw(VideoPause),
+        VideoPlay: markRaw(VideoPlay)
       }
     },
     methods: {
